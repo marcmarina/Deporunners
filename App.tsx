@@ -1,21 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 
 import Screen from './app/components/Screen';
+import LoginScreen from './app/screens/LoginScreen';
 
 export default function App() {
-  return (
-    <Screen style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </Screen>
-  );
+  return <LoginScreen />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
