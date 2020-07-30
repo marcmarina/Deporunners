@@ -1,11 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import {
-  View,
-  TextInput,
-  StyleSheet,
-  ViewStyle,
-  TextInputProps,
-} from 'react-native';
+import { View, TextInput, StyleSheet, ViewStyle } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from '../config/colors';
 
