@@ -7,7 +7,7 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import colors from '../config/colors';
+import colors from '../../config/colors';
 
 interface Props {
   title: string;
@@ -33,7 +33,9 @@ const Button: FunctionComponent<Props> = ({
       ]}
       onPress={onPress}
     >
-      <Text style={styles.text}>{title}</Text>
+      <Text>
+        <Text style={styles.text}>{title}</Text>
+      </Text>
     </TouchableOpacity>
   );
 };

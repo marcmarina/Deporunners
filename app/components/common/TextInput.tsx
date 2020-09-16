@@ -1,17 +1,22 @@
 import React, { FunctionComponent } from 'react';
-import { View, TextInput, StyleSheet, ViewStyle } from 'react-native';
+import {
+  View,
+  TextInput as RNTextInput,
+  StyleSheet,
+  ViewStyle,
+  TextInputProps as RNTextInputProps,
+} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import colors from '../config/colors';
+import colors from '../../config/colors';
 
-interface Props {
+export interface TextInputProps extends RNTextInputProps {
   icon?: string;
   width: React.ReactText;
   placeholder: string;
   style: ViewStyle;
-  [x: string]: any;
 }
 
-const AppTextInput: FunctionComponent<Props> = ({
+const TextInput: FunctionComponent<TextInputProps> = ({
   icon,
   width,
   style,
@@ -28,7 +33,7 @@ const AppTextInput: FunctionComponent<Props> = ({
           style={styles.icon}
         />
       )}
-      <TextInput
+      <RNTextInput
         placeholderTextColor={colors.medium}
         style={styles.input}
         placeholder={placeholder}
@@ -51,4 +56,4 @@ const styles = StyleSheet.create({
   input: { width: '100%' },
 });
 
-export default AppTextInput;
+export default TextInput;

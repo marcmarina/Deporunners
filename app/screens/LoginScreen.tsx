@@ -1,61 +1,98 @@
 import React, { FunctionComponent } from 'react';
-import { View, StyleSheet, Image } from 'react-native';
-import TextInput from '../components/TextInput';
-import Button from '../components/Button';
+import { View, StyleSheet } from 'react-native';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+
+import Screen from '../components/common/Screen';
+import AppText from '../components/common/AppText';
+import TextInput from '../components/common/TextInput';
+import Button from '../components/common/Button';
+
+const validationSchema = Yup.object().shape({
+  username: Yup.string().required(),
+  password: Yup.string().required(),
+});
 
 const LoginScreen: FunctionComponent = () => {
   return (
-    <View style={styles.container}>
-      <View style={styles.logoContainer}>
-        <Image source={require('../assets/icon.png')} style={styles.logo} />
-      </View>
-      <TextInput
-        placeholder="DNI o Email"
-        icon="email"
-        width="90%"
-        style={{ opacity: 0.8 }}
-        keyboardType="email-address"
-      />
-      <TextInput
-        placeholder="Contrasenya"
-        icon="lock"
-        width="90%"
-        style={{ opacity: 0.8 }}
-        secureTextEntry={true}
-      />
-      <View style={styles.buttonContainer}>
-        <Button
-          color="primary"
-          onPress={() => console.log('Test')}
-          title="Log in"
-          width="75%"
+    <Screen
+      style={{
+        backgroundColor: '#20232A',
+      }}
+    >
+      <View style={styles.container}>
+        <AppText
+          text="Deporunners"
+          fontFamily="Exo"
+          fontWeight="700"
+          style={styles.title}
         />
+        <AppText
+          text="Benvingut/da al club!"
+          fontFamily="Exo"
+          fontWeight="500"
+          style={styles.text}
+        />
+        <View style={styles.form}>
+          <Formik
+            initialValues={{ username: '', password: '' }}
+            onSubmit={values => console.log(values)}
+            validationSchema={validationSchema}
+          >
+            {({ isValid, dirty, submitForm, values, setFieldValue }) => (
+              <View style={{ display: 'flex', alignItems: 'center' }}>
+                <TextInput
+                  placeholder="DNI o Email"
+                  icon="email"
+                  width="90%"
+                  style={{ opacity: 0.9 }}
+                  value={values.username}
+                  onChangeText={text => setFieldValue('username', text)}
+                  keyboardType="email-address"
+                />
+                <TextInput
+                  value={values.password}
+                  onChangeText={text => setFieldValue('password', text)}
+                  placeholder="Contrasenya"
+                  icon="lock"
+                  width="90%"
+                  style={{ opacity: 0.9 }}
+                  secureTextEntry
+                />
+                {isValid && (
+                  <Button
+                    color="primary"
+                    onPress={submitForm}
+                    title="Iniciar Sessió"
+                  />
+                )}
+              </View>
+            )}
+          </Formik>
+        </View>
       </View>
-    </View>
+    </Screen>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 20,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    backgroundColor: 'dodgerblue',
     flex: 1,
-  },
-  buttonContainer: {
-    padding: 40,
-    width: '100%',
+    justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: 20,
   },
-  logo: {
-    width: 175,
-    height: 175,
+  form: {
+    marginTop: 70,
+    marginHorizontal: 20,
   },
-  logoContainer: {
-    position: 'absolute',
-    top: 70,
-    alignItems: 'center',
+  text: {
+    fontSize: 20,
+    color: '#f6f6f6',
+  },
+  title: {
+    fontSize: 50,
+    color: '#f6f6f6',
   },
 });
 
