@@ -3,9 +3,17 @@ import { AppLoading } from 'expo';
 import { useFonts } from 'expo-font';
 
 import LoginScreen from './app/screens/LoginScreen';
+import HomeScreen from './app/screens/HomeScreen';
+
+import { getMember } from './app/auth/storage';
+import { Member } from './app/interfaces/Member';
+import Text from './app/components/common/Text';
+import AuthContext from './app/auth/context';
+import { Button, View } from 'react-native';
+import useAuth from './app/auth/useAuth';
 
 export default function App() {
-  const [user, setUser] = useState();
+  const [member, setMember] = useState<Member>();
   const [isReady, setIsReady] = useState(false);
 
   const [fontsLoaded] = useFonts({
@@ -30,16 +38,23 @@ export default function App() {
   });
 
   const restoreToken = async () => {
-    // const user = await authStorage.getUser();
-    if (user) setUser(user);
+    const member = await getMember();
+    if (member) {
+      setMember(member);
+    }
+    setIsReady(true);
   };
 
-  // if (!isReady)
-  //   return (
-  //     <AppLoading startAsync={restoreToken} onFinish={() => setIsReady(true)} />
-  //   );
+  if (!isReady)
+    return (
+      <AppLoading startAsync={restoreToken} onFinish={() => setIsReady(true)} />
+    );
 
-  if (!fontsLoaded) return <AppLoading />;
+  if (!fontsLoaded) return null;
 
-  return <LoginScreen />;
+  return (
+    <AuthContext.Provider value={{ member, setMember }}>
+      {member ? <HomeScreen /> : <LoginScreen />}
+    </AuthContext.Provider>
+  );
 }

@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Text, StyleProp, TextStyle } from 'react-native';
+import { Text as RNText, StyleProp, TextStyle } from 'react-native';
 
 interface Props {
   text: string;
@@ -17,17 +17,22 @@ interface Props {
     | '900';
 }
 
-const AppText: FC<Props> = ({
+const Text: FC<Props> = ({
   text,
   style,
   fontFamily = 'Exo',
   fontWeight = 400,
 }) => {
   return (
-    <Text style={[{ fontFamily: `${fontFamily}-${fontWeight}` }, style]}>
+    <RNText
+      style={[
+        { fontFamily: `${fontFamily}-${fontWeight}`, color: '#f6f6f6' },
+        style,
+      ]}
+    >
       {text}
-    </Text>
+    </RNText>
   );
 };
 
-export default AppText;
+export default Text;

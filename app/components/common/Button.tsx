@@ -1,18 +1,16 @@
 import React, { FunctionComponent } from 'react';
 import {
+  ButtonProps,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
   ViewStyle,
 } from 'react-native';
 
+import AppText from '../common/Text';
 import colors from '../../config/colors';
 
-interface Props {
-  title: string;
-  onPress: () => void;
-  color: string;
+interface Props extends ButtonProps {
   style?: ViewStyle;
   width?: React.ReactText;
 }
@@ -20,9 +18,10 @@ interface Props {
 const Button: FunctionComponent<Props> = ({
   title,
   onPress,
-  color,
+  color = 'primary',
   style,
   width,
+  disabled,
 }) => {
   return (
     <TouchableOpacity
@@ -32,10 +31,9 @@ const Button: FunctionComponent<Props> = ({
         style,
       ]}
       onPress={onPress}
+      disabled={disabled}
     >
-      <Text>
-        <Text style={styles.text}>{title}</Text>
-      </Text>
+      <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>
   );
 };

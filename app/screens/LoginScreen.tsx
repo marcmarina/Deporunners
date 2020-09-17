@@ -1,19 +1,60 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Formik } from 'formik';
+import { Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 
 import Screen from '../components/common/Screen';
-import AppText from '../components/common/AppText';
+import Text from '../components/common/Text';
 import TextInput from '../components/common/TextInput';
 import Button from '../components/common/Button';
+import Axios from 'axios';
+import useAuth from '../auth/useAuth';
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required(),
   password: Yup.string().required(),
 });
 
+interface FormValues {
+  username: string;
+  password: string;
+}
+
+const initialValues = {
+  username: '',
+  password: '',
+};
+
 const LoginScreen: FunctionComponent = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorVisible, setErrorVisible] = useState(false);
+
+  const { login } = useAuth();
+
+  const handleSubmit = async (
+    { username, password }: FormValues,
+    { setFieldValue }: FormikHelpers<FormValues>
+  ) => {
+    try {
+      setIsSubmitting(true);
+      setErrorVisible(false);
+      const { data } = await Axios.post(
+        'http://192.168.1.52:8080/member/login',
+        {
+          username,
+          password,
+        }
+      );
+      login(data);
+      setIsSubmitting(false);
+    } catch (ex) {
+      setIsSubmitting(false);
+      if (ex.response.status === 400) {
+        setErrorVisible(true);
+      }
+    }
+  };
+
   return (
     <Screen
       style={{
@@ -21,13 +62,13 @@ const LoginScreen: FunctionComponent = () => {
       }}
     >
       <View style={styles.container}>
-        <AppText
+        <Text
           text="Deporunners"
           fontFamily="Exo"
           fontWeight="700"
           style={styles.title}
         />
-        <AppText
+        <Text
           text="Benvingut/da al club!"
           fontFamily="Exo"
           fontWeight="500"
@@ -35,11 +76,11 @@ const LoginScreen: FunctionComponent = () => {
         />
         <View style={styles.form}>
           <Formik
-            initialValues={{ username: '', password: '' }}
-            onSubmit={values => console.log(values)}
+            initialValues={initialValues}
+            onSubmit={handleSubmit}
             validationSchema={validationSchema}
           >
-            {({ isValid, dirty, submitForm, values, setFieldValue }) => (
+            {({ isValid, submitForm, values, setFieldValue }) => (
               <View style={{ display: 'flex', alignItems: 'center' }}>
                 <TextInput
                   placeholder="DNI o Email"
@@ -59,13 +100,21 @@ const LoginScreen: FunctionComponent = () => {
                   style={{ opacity: 0.9 }}
                   secureTextEntry
                 />
-                {isValid && (
-                  <Button
-                    color="primary"
-                    onPress={submitForm}
-                    title="Iniciar Sessió"
-                  />
-                )}
+                <Button
+                  disabled={isSubmitting}
+                  color="primary"
+                  onPress={submitForm}
+                  title="Iniciar Sessió"
+                />
+                <View style={styles.errorContainer}>
+                  {errorVisible && (
+                    <Text
+                      style={styles.errorMessage}
+                      text="Les dades introduïdes no són valides"
+                      fontWeight="600"
+                    />
+                  )}
+                </View>
               </View>
             )}
           </Formik>
@@ -88,11 +137,20 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
-    color: '#f6f6f6',
   },
   title: {
     fontSize: 50,
-    color: '#f6f6f6',
+  },
+  errorContainer: {
+    marginTop: 35,
+    height: 35,
+    justifyContent: 'center',
+  },
+  errorMessage: {
+    padding: 5,
+    borderRadius: 10,
+    backgroundColor: 'tomato',
+    fontSize: 15,
   },
 });
 
