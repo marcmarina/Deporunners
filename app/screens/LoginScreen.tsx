@@ -9,6 +9,7 @@ import TextInput from '../components/common/TextInput';
 import Button from '../components/common/Button';
 import Axios from 'axios';
 import useAuth from '../auth/useAuth';
+import client from '../api/client';
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required(),
@@ -38,18 +39,15 @@ const LoginScreen: FunctionComponent = () => {
     try {
       setIsSubmitting(true);
       setErrorVisible(false);
-      const { data } = await Axios.post(
-        'http://192.168.1.52:8080/member/login',
-        {
-          username,
-          password,
-        }
-      );
-      login(data);
+      const { data } = await client.post('/member/login', {
+        username,
+        password,
+      });
       setIsSubmitting(false);
+      login(data);
     } catch (ex) {
       setIsSubmitting(false);
-      if (ex.response.status === 400) {
+      if (ex?.response.status === 400) {
         setErrorVisible(true);
       }
     }

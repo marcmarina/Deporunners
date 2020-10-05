@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 import { StyleSheet } from 'react-native';
 import Screen from '../components/common/Screen';
 import Text from '../components/common/Text';
@@ -6,11 +6,11 @@ import Button from '../components/common/Button';
 import useAuth from '../auth/useAuth';
 
 const LoginScreen: FunctionComponent = () => {
-  const { logout } = useAuth();
+  const { logout, member } = useAuth();
 
   return (
     <Screen style={styles.container}>
-      <Text text="Logged In!" style={styles.title} />
+      <Text text={JSON.stringify(member)} style={styles.title} />
       <Button title="Log Out" onPress={() => logout()} />
     </Screen>
   );
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   title: {
-    fontSize: 50,
+    fontSize: 20,
   },
 });
 
