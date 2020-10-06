@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+
 import { AppLoading } from 'expo';
 import { useFonts } from 'expo-font';
 
+import AppNavigator from './app/navigation/AppNavigator';
 import LoginScreen from './app/screens/LoginScreen';
-import HomeScreen from './app/screens/HomeScreen';
-
 import { getMember } from './app/auth/storage';
 import { Member } from './app/interfaces/Member';
-import Text from './app/components/common/Text';
 import AuthContext from './app/auth/context';
-import { Button, View } from 'react-native';
-import useAuth from './app/auth/useAuth';
+import navigationTheme from './app/navigation/navigationTheme';
 
 export default function App() {
   const [member, setMember] = useState<Member>();
@@ -54,7 +53,9 @@ export default function App() {
 
   return (
     <AuthContext.Provider value={{ member, setMember }}>
-      {member ? <HomeScreen /> : <LoginScreen />}
+      <NavigationContainer theme={navigationTheme}>
+        {member ? <AppNavigator /> : <LoginScreen />}
+      </NavigationContainer>
     </AuthContext.Provider>
   );
 }

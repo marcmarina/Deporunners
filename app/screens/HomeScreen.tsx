@@ -59,14 +59,7 @@ const HomeScreen: FunctionComponent = () => {
           style={styles.dni}
         />
       </View>
-      <View style={styles.buttonGroup}>
-        <Icon
-          backgroundColor="#697CAA"
-          iconColor="white"
-          name="home"
-          size={75}
-        />
-      </View>
+      <View style={styles.buttonGroup}></View>
     </Screen>
   );
 };
@@ -78,7 +71,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
-    backgroundColor: '#20232A',
+    // backgroundColor: '#20232A',
     alignItems: 'center',
     paddingTop: 20,
     flexDirection: 'column',
