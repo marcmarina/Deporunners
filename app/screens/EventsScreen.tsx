@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, FlatList, TouchableOpacity, View } from 'react-native';
 import openMap from 'react-native-open-maps';
 
 import client from '../api/client';
@@ -26,17 +26,16 @@ const EventsScreen: FC = () => {
     }
   };
 
-  if (!events) return null;
-
   return (
     <Screen>
       <FlatList
         data={events}
         keyExtractor={item => item._id}
-        style={styles.list}
+        contentContainerStyle={styles.list}
         showsVerticalScrollIndicator={false}
         onRefresh={() => retrieveData()}
         refreshing={loading}
+        ItemSeparatorComponent={() => <View style={{ marginTop: 10 }} />}
         renderItem={({ item }) => (
           <TouchableOpacity
             activeOpacity={0.6}
@@ -61,7 +60,7 @@ const EventsScreen: FC = () => {
 
 const styles = StyleSheet.create({
   list: {
-    // paddingBottom: 10,
+    padding: 10,
   },
 });
 

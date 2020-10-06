@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: colors.secondary,
     padding: 10,
-    margin: 10,
   },
   dateTime: {
     fontSize: 15,
