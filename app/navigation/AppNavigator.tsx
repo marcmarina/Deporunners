@@ -12,6 +12,7 @@ const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => (
   <Tab.Navigator
+    initialRouteName="Carnet"
     tabBarOptions={{
       activeBackgroundColor: colors.secondary,
       activeTintColor: colors.white,

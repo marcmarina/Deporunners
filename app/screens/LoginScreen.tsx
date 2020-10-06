@@ -100,7 +100,7 @@ const LoginScreen: FunctionComponent = () => {
                 />
                 <Button
                   disabled={isSubmitting}
-                  color="primary"
+                  color="secondary"
                   onPress={submitForm}
                   title="Iniciar Sessió"
                 />
