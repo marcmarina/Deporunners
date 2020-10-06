@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import dayjs from 'dayjs';
+import openMap from 'react-native-open-maps';
 
 import Event from '../interfaces/Event';
 import colors from '../config/colors';
@@ -12,14 +13,19 @@ interface Props {
 
 const EventListItem: FC<Props> = ({ event }) => {
   return (
-    <View style={styles.container}>
-      <Text text={event.name} fontWeight="600" style={styles.name} />
-      <Text
-        text={dayjs(event.dateTime).format('DD/MM/YYYY HH:MM:ss')}
-        fontWeight="500"
-        style={styles.dateTime}
-      />
-    </View>
+    <TouchableOpacity
+      activeOpacity={0.6}
+      onPress={() => goToMap(event.coordinates)}
+    >
+      <View style={styles.container}>
+        <Text text={event.name} fontWeight="600" style={styles.name} />
+        <Text
+          text={dayjs(event.dateTime).format('DD/MM/YYYY HH:MM:ss')}
+          fontWeight="500"
+          style={styles.dateTime}
+        />
+      </View>
+    </TouchableOpacity>
   );
 };
 
@@ -36,5 +42,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 });
+
+const goToMap = (coordinates: string) => {
+  const [latitude, longitude] = coordinates.replace(/,/g, '').split(' ');
+  openMap({
+    latitude: parseFloat(latitude),
+    longitude: parseFloat(longitude),
+    zoom: 50,
+  });
+};
 
 export default EventListItem;
