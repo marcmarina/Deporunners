@@ -47,7 +47,7 @@ const LoginScreen: FunctionComponent = () => {
       login(data);
     } catch (ex) {
       setIsSubmitting(false);
-      if (ex?.response.status === 400) {
+      if (ex?.response && ex.response.status === 400) {
         setErrorVisible(true);
       }
     }

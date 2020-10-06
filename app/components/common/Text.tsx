@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Text as RNText, StyleProp, TextStyle } from 'react-native';
 
-interface Props {
+export interface TextProps {
   text: string;
   style?: StyleProp<TextStyle>;
   fontFamily?: 'RobotoSlab' | 'Exo';
@@ -17,7 +17,7 @@ interface Props {
     | '900';
 }
 
-const Text: FC<Props> = ({
+const Text: FC<TextProps> = ({
   text,
   style,
   fontFamily = 'Exo',

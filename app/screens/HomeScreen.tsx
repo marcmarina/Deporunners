@@ -1,32 +1,105 @@
-import React, { FunctionComponent } from 'react';
-import { StyleSheet } from 'react-native';
+import React, { FunctionComponent, useEffect, useState } from 'react';
+import { Image, StyleSheet, View } from 'react-native';
+import padStart from 'lodash/padStart';
+
 import Screen from '../components/common/Screen';
 import Text from '../components/common/Text';
-import Button from '../components/common/Button';
 import useAuth from '../auth/useAuth';
+import TextWithLabel from '../components/common/TextWithLabel';
+import client from '../api/client';
+import Icon from '../components/common/Icon';
 
-const LoginScreen: FunctionComponent = () => {
-  const { logout, member } = useAuth();
+const HomeScreen: FunctionComponent = () => {
+  let { member: authMember } = useAuth();
+  const [member, setMember] = useState(authMember);
+
+  const retrieveData = async () => {
+    try {
+      const { data } = await client.get(`/member/${member?._id}`);
+      if (data) setMember(data);
+    } catch (ex) {
+      console.log(ex);
+    }
+  };
+
+  useEffect(() => {
+    retrieveData();
+  }, []);
+
+  if (!member) return null;
 
   return (
     <Screen style={styles.container}>
-      <Text text={JSON.stringify(member)} style={styles.title} />
-      <Button title="Log Out" onPress={() => logout()} />
+      <Image
+        source={require('../assets/applogo_round.png')}
+        style={styles.image}
+      />
+      <View style={styles.infoContainer}>
+        <Text
+          text={member.firstName + ' ' + member.lastName}
+          fontWeight="600"
+          style={styles.fullName}
+        />
+        <TextWithLabel
+          text={member.dni}
+          label="DNI: "
+          fontWeight="600"
+          style={styles.dni}
+        />
+        <TextWithLabel
+          text={padStart(member.numMember.toString(), 3, '0')}
+          label="Núm Soci: "
+          fontWeight="600"
+          style={styles.dni}
+        />
+        <TextWithLabel
+          text={member.telephone}
+          label="Telèfon: "
+          fontWeight="600"
+          style={styles.dni}
+        />
+      </View>
+      <View style={styles.buttonGroup}>
+        <Icon
+          backgroundColor="#697CAA"
+          iconColor="white"
+          name="home"
+          size={75}
+        />
+      </View>
     </Screen>
   );
 };
 
 const styles = StyleSheet.create({
+  buttonGroup: {
+    flex: 2,
+    width: 100,
+    alignItems: 'center',
+  },
   container: {
     backgroundColor: '#20232A',
-    flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 20,
+    flexDirection: 'column',
   },
-  title: {
-    fontSize: 20,
+  fullName: {
+    fontSize: 30,
+  },
+  dni: {
+    fontSize: 25,
+    marginTop: 15,
+  },
+  infoContainer: {
+    alignItems: 'center',
+    marginTop: 30,
+    flex: 4,
+  },
+  image: {
+    marginTop: 20,
+    height: 150,
+    width: 150,
   },
 });
 
-export default LoginScreen;
+export default HomeScreen;
