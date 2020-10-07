@@ -22,7 +22,7 @@ const EventListItem: FC<Props> = ({ event }) => {
       <View style={styles.container}>
         <Text text={event.name} fontWeight="600" style={styles.name} />
         <Text
-          text={dayjs(event.dateTime).format('DD/MM/YYYY HH:MM:ss')}
+          text={dayjs(event.dateTime).format('DD/MM/YYYY HH:MM')}
           fontWeight="500"
           style={styles.dateTime}
         />
