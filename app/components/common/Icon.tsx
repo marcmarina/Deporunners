@@ -1,12 +1,13 @@
 import React from 'react';
-import { View } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { View, ViewStyle } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 interface Props {
   name: string;
   size: number;
   backgroundColor: string;
   iconColor: string;
+  style?: ViewStyle;
 }
 
 export default function Icon({
@@ -14,19 +15,23 @@ export default function Icon({
   size = 40,
   backgroundColor = 'black',
   iconColor = 'white',
+  style,
 }: Props) {
   return (
     <View
-      style={{
-        width: size,
-        height: size,
-        borderRadius: size / 2,
-        backgroundColor,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
+      style={[
+        {
+          width: size,
+          height: size,
+          borderRadius: size / 2,
+          backgroundColor,
+          justifyContent: 'center',
+          alignItems: 'center',
+        },
+        style,
+      ]}
     >
-      <Feather name={name} color={iconColor} size={0.5 * size} />
+      <MaterialCommunityIcons name={name} color={iconColor} size={0.5 * size} />
     </View>
   );
 }
