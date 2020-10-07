@@ -3,10 +3,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import HomeScreen from '../screens/HomeScreen';
 import AccountScreen from '../screens/AccountScreen';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from '../config/colors';
 import TabBarIcon from '../components/common/TabBarIcon';
-import EventsScreen from '../screens/EventsScreen';
+import EventsNavigator from './EventsNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -27,7 +26,7 @@ const AppNavigator = () => (
   >
     <Tab.Screen
       name="Events"
-      component={EventsScreen}
+      component={EventsNavigator}
       options={{
         tabBarIcon: props => <TabBarIcon name="calendar-month" {...props} />,
       }}
