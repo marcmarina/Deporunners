@@ -1,6 +1,6 @@
 import * as SecureStore from 'expo-secure-store';
 import jwtDecode from 'jwt-decode';
-import { Member } from '../interfaces/Member';
+import Member from '../interfaces/Member';
 
 const key = 'authToken';
 
@@ -14,7 +14,11 @@ export const storeToken = async (authToken: string) => {
 
 export const getMember = async (): Promise<Member | null> => {
   const token = await getToken();
-  return token ? jwtDecode(token) : null;
+  if (token) {
+    const member: Member = jwtDecode(token);
+    return member;
+  }
+  return null;
 };
 
 export const getToken = async () => {

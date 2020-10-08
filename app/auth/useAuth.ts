@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import jwtDecode from 'jwt-decode';
 
 import AuthContext from './context';
-import { Member } from '../interfaces/Member';
+import Member from '../interfaces/Member';
 import { storeToken, removeToken } from './storage';
 
 export default function useAuth() {

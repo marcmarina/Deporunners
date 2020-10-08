@@ -1,8 +1,10 @@
 import { RouteProp } from '@react-navigation/native';
 import dayjs from 'dayjs';
-import React, { FC } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import React, { FC, useEffect, useState } from 'react';
+import { StyleSheet, View, ScrollView, TouchableOpacity } from 'react-native';
+
+import client from '../api/client';
+import useAuth from '../auth/useAuth';
 
 import Icon from '../components/common/Icon';
 import Screen from '../components/common/Screen';
@@ -14,7 +16,41 @@ interface Props {
 }
 
 const EventDetailsScreen: FC<Props> = ({ route }) => {
-  const { event } = route.params;
+  const { event: routeEvent } = route.params;
+  const [event, setEvent] = useState(routeEvent);
+
+  const { member } = useAuth();
+
+  const handleAttend = async (attending: boolean) => {
+    try {
+      const { data, status } = await client.patch(
+        `/event/${event._id}/attend?attending=${attending}`
+      );
+      if (status === 201) {
+        setEvent(data);
+      }
+    } catch (ex) {
+      console.log(ex);
+    }
+  };
+
+  const retrieveData = async () => {
+    try {
+      const { data } = await client.get(`/event/${event._id}`);
+      setEvent(data);
+    } catch (ex) {
+      console.log(ex);
+    }
+  };
+
+  useEffect(() => {
+    retrieveData();
+  }, []);
+
+  if (!member) return null;
+
+  const attending = event.members.includes(member._id.toString());
+
   return (
     <Screen>
       <ScrollView
@@ -34,20 +70,34 @@ const EventDetailsScreen: FC<Props> = ({ route }) => {
           fontWeight="400"
         />
         <View style={styles.footer}>
-          <Icon
-            backgroundColor="#4CAF50"
-            iconColor="#f6f6f6"
-            name="thumb-up"
-            size={85}
-            style={styles.icon}
-          />
-          <Icon
-            backgroundColor="tomato"
-            iconColor="#f6f6f6"
-            name="thumb-down"
-            size={85}
-            style={styles.icon}
-          />
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => handleAttend(true)}
+            disabled={attending}
+            style={{ opacity: attending ? 1 : 0.6 }}
+          >
+            <Icon
+              backgroundColor="#4CAF50"
+              iconColor="#f6f6f6"
+              name="thumb-up"
+              size={85}
+              style={styles.icon}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => handleAttend(false)}
+            disabled={!attending}
+            style={{ opacity: attending ? 0.6 : 1 }}
+          >
+            <Icon
+              backgroundColor="tomato"
+              iconColor="#f6f6f6"
+              name="thumb-down"
+              size={85}
+              style={styles.icon}
+            />
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </Screen>
@@ -77,7 +127,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   icon: {
-    borderRadius: 30,
+    borderRadius: 25,
     margin: 20,
   },
 });

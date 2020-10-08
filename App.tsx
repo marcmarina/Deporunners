@@ -7,7 +7,7 @@ import { useFonts } from 'expo-font';
 import AppNavigator from './app/navigation/AppNavigator';
 import LoginScreen from './app/screens/LoginScreen';
 import { getMember } from './app/auth/storage';
-import { Member } from './app/interfaces/Member';
+import Member from './app/interfaces/Member';
 import AuthContext from './app/auth/context';
 import navigationTheme from './app/navigation/navigationTheme';
 
