@@ -10,6 +10,7 @@ import { getMember } from './app/auth/storage';
 import Member from './app/interfaces/Member';
 import AuthContext from './app/auth/context';
 import navigationTheme from './app/navigation/navigationTheme';
+import { navigationRef } from './app/navigation/rootNavigation';
 
 export default function App() {
   const [member, setMember] = useState<Member>();
@@ -53,7 +54,7 @@ export default function App() {
 
   return (
     <AuthContext.Provider value={{ member, setMember }}>
-      <NavigationContainer theme={navigationTheme}>
+      <NavigationContainer ref={navigationRef} theme={navigationTheme}>
         {member ? <AppNavigator /> : <LoginScreen />}
       </NavigationContainer>
     </AuthContext.Provider>
