@@ -5,7 +5,7 @@ import expoPushTokensApi from '../api/expoPushTokens';
 import { useEffect } from 'react';
 import navigation from '../navigation/rootNavigation';
 
-const useNotifications = (notificationListener?: any) => {
+const useNotifications = () => {
   const registerForPushNotifications = async () => {
     try {
       const permission = await Permissions.askAsync(Permissions.NOTIFICATIONS);
@@ -20,9 +20,9 @@ const useNotifications = (notificationListener?: any) => {
 
   useEffect(() => {
     registerForPushNotifications();
-    console.log('AAAAAAAAAAA');
     Notifications.addListener(notification => {
-      if (notification.origin === 'selected') navigation.navigate('Events');
+      if (notification.origin === 'selected')
+        navigation.navigate(notification.data.route, notification.data.params);
     });
   }, []);
 };
