@@ -2,7 +2,7 @@
   "expo": {
     "name": "Deporunners",
     "slug": "Deporunners",
-    "version": "1.0.0",
+    "version": "0.1.0",
     "orientation": "portrait",
     "icon": "./app/assets/icon.png",
     "splash": {
@@ -17,7 +17,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.cedeporunners.deporunners",
+      "buildNumber": "0.1.0"
+    },
+    "android": {
+      "package": "com.cedeporunners.deporunners",
+      "versionCode": 1
     }
   }
 }
