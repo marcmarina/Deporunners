@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import { Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 
@@ -7,7 +7,6 @@ import Screen from '../components/common/Screen';
 import Text from '../components/common/Text';
 import TextInput from '../components/common/TextInput';
 import Button from '../components/common/Button';
-import Axios from 'axios';
 import useAuth from '../auth/useAuth';
 import client from '../api/client';
 
@@ -29,6 +28,7 @@ const initialValues = {
 const LoginScreen: FunctionComponent = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorVisible, setErrorVisible] = useState(false);
+  const [errorText, setErrorText] = useState('');
 
   const { login } = useAuth();
 
@@ -49,6 +49,10 @@ const LoginScreen: FunctionComponent = () => {
       setIsSubmitting(false);
       if (ex?.response && ex.response.status === 400) {
         setErrorVisible(true);
+        setErrorText('Les dades introduïdes no són valides');
+      } else if (ex.code === 'ECONNABORTED') {
+        setErrorVisible(true);
+        setErrorText('Hi ha hagut un error connectant a la API');
       }
     }
   };
@@ -78,7 +82,7 @@ const LoginScreen: FunctionComponent = () => {
             onSubmit={handleSubmit}
             validationSchema={validationSchema}
           >
-            {({ isValid, submitForm, values, setFieldValue }) => (
+            {({ submitForm, values, setFieldValue }) => (
               <View style={{ display: 'flex', alignItems: 'center' }}>
                 <TextInput
                   placeholder="DNI o Email"
@@ -108,7 +112,7 @@ const LoginScreen: FunctionComponent = () => {
                   {errorVisible && (
                     <Text
                       style={styles.errorMessage}
-                      text="Les dades introduïdes no són valides"
+                      text={errorText}
                       fontWeight="600"
                     />
                   )}

@@ -2,12 +2,11 @@ import React, { FunctionComponent } from 'react';
 import {
   ButtonProps,
   StyleSheet,
-  Text,
   TouchableOpacity,
   ViewStyle,
 } from 'react-native';
 
-import AppText from '../common/Text';
+import Text from '../common/Text';
 import colors from '../../config/colors';
 
 interface Props extends ButtonProps {
@@ -33,14 +32,14 @@ const Button: FunctionComponent<Props> = ({
       onPress={onPress}
       disabled={disabled}
     >
-      <Text style={styles.text}>{title}</Text>
+      <Text text={title} fontWeight="700" style={styles.text} />
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   button: {
-    borderRadius: 100,
+    borderRadius: 15,
     width: '100%',
     height: 50,
     justifyContent: 'center',
@@ -52,7 +51,6 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 18,
     textTransform: 'uppercase',
-    fontWeight: 'bold',
   },
 });
 
