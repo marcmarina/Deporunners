@@ -22,7 +22,7 @@
     },
     "android": {
       "package": "com.cedeporunners.deporunners",
-      "versionCode": 1
+      "versionCode": 2
     }
   }
 }
