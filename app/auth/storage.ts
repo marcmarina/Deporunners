@@ -1,29 +1,19 @@
 import * as SecureStore from 'expo-secure-store';
-import jwtDecode from 'jwt-decode';
-import Member from '../interfaces/Member';
 
-const key = 'authToken';
+const jwtKey = 'authToken';
+const refreshTokenKey = 'refreshToken';
 
 export const storeToken = async (authToken: string) => {
   try {
-    await SecureStore.setItemAsync(key, authToken);
+    await SecureStore.setItemAsync(jwtKey, authToken);
   } catch (error) {
     console.log('Error storing the auth token', error);
   }
 };
 
-export const getMember = async (): Promise<Member | null> => {
-  const token = await getToken();
-  if (token) {
-    const member: Member = jwtDecode(token);
-    return member;
-  }
-  return null;
-};
-
 export const getToken = async () => {
   try {
-    return await SecureStore.getItemAsync(key);
+    return await SecureStore.getItemAsync(jwtKey);
   } catch (error) {
     console.log('Error retrieving the auth token', error);
   }
@@ -31,8 +21,32 @@ export const getToken = async () => {
 
 export const removeToken = async () => {
   try {
-    await SecureStore.deleteItemAsync(key);
+    await SecureStore.deleteItemAsync(jwtKey);
   } catch (error) {
     console.log('Error deleting the auth token', error);
+  }
+};
+
+export const storeRefreshToken = async (refreshToken: string) => {
+  try {
+    await SecureStore.setItemAsync(refreshTokenKey, refreshToken);
+  } catch (error) {
+    console.log('Error storing the refresh token', error);
+  }
+};
+
+export const getRefreshToken = async () => {
+  try {
+    return await SecureStore.getItemAsync(refreshTokenKey);
+  } catch (error) {
+    console.log('Error retrieving the refresh token', error);
+  }
+};
+
+export const removeRefreshToken = async () => {
+  try {
+    await SecureStore.deleteItemAsync(refreshTokenKey);
+  } catch (error) {
+    console.log('Error deleting the refresh token', error);
   }
 };

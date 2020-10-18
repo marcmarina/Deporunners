@@ -9,6 +9,7 @@ import TextInput from '../components/common/TextInput';
 import Button from '../components/common/Button';
 import useAuth from '../auth/useAuth';
 import client from '../api/client';
+import { head } from 'lodash';
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required(),
@@ -39,13 +40,15 @@ const LoginScreen: FunctionComponent = () => {
     try {
       setIsSubmitting(true);
       setErrorVisible(false);
-      const { data } = await client.post('/member/login', {
+      const { data, headers } = await client.post('/member/login', {
         username,
         password,
       });
+      const refreshToken = headers['x-refresh-token'];
       setIsSubmitting(false);
-      login(data);
+      login(data, refreshToken);
     } catch (ex) {
+      console.log({ ...ex });
       setIsSubmitting(false);
       if (ex?.response && ex.response.status === 400) {
         setErrorVisible(true);

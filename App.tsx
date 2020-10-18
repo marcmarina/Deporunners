@@ -6,11 +6,12 @@ import { useFonts } from 'expo-font';
 
 import AppNavigator from './app/navigation/AppNavigator';
 import LoginScreen from './app/screens/LoginScreen';
-import { getMember } from './app/auth/storage';
+import { getRefreshToken, getToken } from './app/auth/storage';
 import Member from './app/interfaces/Member';
 import AuthContext from './app/auth/context';
 import navigationTheme from './app/navigation/navigationTheme';
 import { navigationRef } from './app/navigation/rootNavigation';
+import client from './app/api/client';
 
 export default function App() {
   const [member, setMember] = useState<Member>();
@@ -37,17 +38,23 @@ export default function App() {
     'Exo-900': require('./app/assets/fonts/Exo/Exo-900.ttf'),
   });
 
-  const restoreToken = async () => {
-    const member = await getMember();
-    if (member) {
-      setMember(member);
+  const restoreMember = async () => {
+    try {
+      if (getToken() && getRefreshToken()) {
+        const { data } = await client.get('/member/self');
+        setMember(data);
+      }
+    } catch (ex) {
+      console.log(ex);
     }
-    setIsReady(true);
   };
 
   if (!isReady)
     return (
-      <AppLoading startAsync={restoreToken} onFinish={() => setIsReady(true)} />
+      <AppLoading
+        startAsync={restoreMember}
+        onFinish={() => setIsReady(true)}
+      />
     );
 
   if (!fontsLoaded) return null;

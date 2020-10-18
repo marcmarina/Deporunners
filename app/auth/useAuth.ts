@@ -1,23 +1,31 @@
 import { useContext } from 'react';
-import jwtDecode from 'jwt-decode';
 
 import AuthContext from './context';
-import Member from '../interfaces/Member';
-import { storeToken, removeToken } from './storage';
+import {
+  storeToken,
+  removeToken,
+  storeRefreshToken,
+  removeRefreshToken,
+} from './storage';
+import client from '../api/client';
 
 export default function useAuth() {
   const { member, setMember } = useContext(AuthContext);
 
-  const login = (authToken: any) => {
-    const storedMember: Member = jwtDecode(authToken);
-    if (storedMember) {
-      if (setMember) setMember(storedMember);
-      storeToken(authToken);
+  const login = async (authToken: any, refreshToken: any) => {
+    try {
+      await storeToken(authToken);
+      await storeRefreshToken(refreshToken);
+      const { data } = await client.get('/member/self');
+      if (setMember) setMember(data);
+    } catch (ex) {
+      console.log(ex);
     }
   };
 
   const logout = () => {
     removeToken();
+    removeRefreshToken();
     if (setMember) setMember(undefined);
   };
 
