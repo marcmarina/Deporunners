@@ -18,15 +18,6 @@ export default function App() {
   const [isReady, setIsReady] = useState(false);
 
   const [fontsLoaded] = useFonts({
-    'RobotoSlab-100': require('./app/assets/fonts/RobotoSlab/RobotoSlab-100.ttf'),
-    'RobotoSlab-200': require('./app/assets/fonts/RobotoSlab/RobotoSlab-200.ttf'),
-    'RobotoSlab-300': require('./app/assets/fonts/RobotoSlab/RobotoSlab-300.ttf'),
-    'RobotoSlab-400': require('./app/assets/fonts/RobotoSlab/RobotoSlab-400.ttf'),
-    'RobotoSlab-500': require('./app/assets/fonts/RobotoSlab/RobotoSlab-500.ttf'),
-    'RobotoSlab-600': require('./app/assets/fonts/RobotoSlab/RobotoSlab-600.ttf'),
-    'RobotoSlab-700': require('./app/assets/fonts/RobotoSlab/RobotoSlab-700.ttf'),
-    'RobotoSlab-800': require('./app/assets/fonts/RobotoSlab/RobotoSlab-800.ttf'),
-    'RobotoSlab-900': require('./app/assets/fonts/RobotoSlab/RobotoSlab-900.ttf'),
     'Exo-100': require('./app/assets/fonts/Exo/Exo-100.ttf'),
     'Exo-200': require('./app/assets/fonts/Exo/Exo-200.ttf'),
     'Exo-300': require('./app/assets/fonts/Exo/Exo-300.ttf'),
@@ -36,11 +27,20 @@ export default function App() {
     'Exo-700': require('./app/assets/fonts/Exo/Exo-700.ttf'),
     'Exo-800': require('./app/assets/fonts/Exo/Exo-800.ttf'),
     'Exo-900': require('./app/assets/fonts/Exo/Exo-900.ttf'),
+    'Montserrat-100': require('./app/assets/fonts/Montserrat/Montserrat-100.ttf'),
+    'Montserrat-200': require('./app/assets/fonts/Montserrat/Montserrat-200.ttf'),
+    'Montserrat-300': require('./app/assets/fonts/Montserrat/Montserrat-300.ttf'),
+    'Montserrat-400': require('./app/assets/fonts/Montserrat/Montserrat-400.ttf'),
+    'Montserrat-500': require('./app/assets/fonts/Montserrat/Montserrat-500.ttf'),
+    'Montserrat-600': require('./app/assets/fonts/Montserrat/Montserrat-600.ttf'),
+    'Montserrat-700': require('./app/assets/fonts/Montserrat/Montserrat-700.ttf'),
+    'Montserrat-800': require('./app/assets/fonts/Montserrat/Montserrat-800.ttf'),
+    'Montserrat-900': require('./app/assets/fonts/Montserrat/Montserrat-900.ttf'),
   });
 
   const restoreMember = async () => {
     try {
-      if (getToken() && getRefreshToken()) {
+      if ((await getToken()) && (await getRefreshToken())) {
         const { data } = await client.get('/member/self');
         setMember(data);
       }

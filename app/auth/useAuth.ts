@@ -23,9 +23,9 @@ export default function useAuth() {
     }
   };
 
-  const logout = () => {
-    removeToken();
-    removeRefreshToken();
+  const logout = async () => {
+    await removeToken();
+    await removeRefreshToken();
     if (setMember) setMember(undefined);
   };
 

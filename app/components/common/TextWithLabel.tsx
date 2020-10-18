@@ -12,7 +12,7 @@ const TextWithLabel: FC<Props> = ({
   text,
   style,
   fontWeight = '400',
-  fontFamily = 'Exo',
+  fontFamily,
 }) => {
   return (
     <View style={styles.container}>

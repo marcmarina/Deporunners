@@ -9,7 +9,7 @@ import {
 export interface TextProps extends RNTextProps {
   text: string;
   style?: StyleProp<TextStyle>;
-  fontFamily?: 'RobotoSlab' | 'Exo';
+  fontFamily?: 'Exo' | 'Montserrat';
   fontWeight?:
     | '100'
     | '200'

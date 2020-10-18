@@ -22,7 +22,7 @@ instance.interceptors.request.use(async config => {
 
 instance.interceptors.response.use(async config => {
   const returnedToken = config.headers['x-auth-token'];
-  if (returnedToken && returnedToken !== getToken()) {
+  if (returnedToken && returnedToken !== (await getToken())) {
     await storeToken(returnedToken);
   }
   return config;

@@ -67,15 +67,9 @@ const LoginScreen: FunctionComponent = () => {
       }}
     >
       <View style={styles.container}>
-        <Text
-          text="Deporunners"
-          fontFamily="Exo"
-          fontWeight="700"
-          style={styles.title}
-        />
+        <Text text="Deporunners" fontWeight="700" style={styles.title} />
         <Text
           text="Benvingut/da al club!"
-          fontFamily="Exo"
           fontWeight="500"
           style={styles.text}
         />
