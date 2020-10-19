@@ -1,11 +1,15 @@
-import { DefaultTheme } from '@react-navigation/native';
+import { DefaultTheme, Theme } from '@react-navigation/native';
 import colors from '../config/colors';
 
-export default {
+const theme: Theme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: colors.white,
+    text: '#fafafa',
     background: colors.primary,
+    card: colors.secondary,
+    border: 'white',
   },
 };
+
+export default theme;

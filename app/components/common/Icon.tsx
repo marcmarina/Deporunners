@@ -5,8 +5,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 interface Props {
   name: string;
   size: number;
-  backgroundColor: string;
-  iconColor: string;
+  backgroundColor?: string;
+  iconColor?: string;
   style?: ViewStyle;
 }
 

@@ -2,11 +2,11 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import HomeScreen from '../screens/HomeScreen';
-import AccountScreen from '../screens/AccountScreen';
 import colors from '../config/colors';
 import TabBarIcon from '../components/common/TabBarIcon';
 import EventsNavigator from './EventsNavigator';
 import useNotifications from '../hooks/useNotifications';
+import AccountNavigator from './AccountNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -46,7 +46,7 @@ const AppNavigator = () => {
       />
       <Tab.Screen
         name="Compte"
-        component={AccountScreen}
+        component={AccountNavigator}
         options={{
           tabBarIcon: props => <TabBarIcon name="account" {...props} />,
         }}
