@@ -96,6 +96,7 @@ const NameEmailRow: FC<{
       style={{
         flexDirection: 'row',
         alignItems: 'center',
+        alignContent: 'center',
       }}
     >
       <View

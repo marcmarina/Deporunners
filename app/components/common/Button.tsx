@@ -1,15 +1,17 @@
 import React, { FunctionComponent } from 'react';
 import {
-  ButtonProps,
   StyleSheet,
   TouchableOpacity,
+  TouchableOpacityProps,
   ViewStyle,
 } from 'react-native';
 
 import Text from '../common/Text';
 import colors from '../../config/colors';
 
-interface Props extends ButtonProps {
+interface Props extends TouchableOpacityProps {
+  title: string;
+  color: string;
   style?: ViewStyle;
   width?: React.ReactText;
 }

@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
-import { View, StyleSheet, Alert } from 'react-native';
+import { View, StyleSheet, Alert, Keyboard } from 'react-native';
 import { Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 
@@ -37,6 +37,7 @@ const LoginScreen: FunctionComponent = () => {
     { username, password }: FormValues,
     { setFieldValue }: FormikHelpers<FormValues>
   ) => {
+    Keyboard.dismiss();
     try {
       setIsSubmitting(true);
       setErrorVisible(false);
