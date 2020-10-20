@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "786536751449",
+    "firebase_url": "https://deporunners-9f90b.firebaseio.com",
+    "project_id": "deporunners-9f90b",
+    "storage_bucket": "deporunners-9f90b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:786536751449:android:92b3b72bcd4c924fb4ac48",
+        "android_client_info": {
+          "package_name": "com.cedeporunners.deporunners"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "786536751449-dc53ia61singtm9rgrk6s3a069o9pote.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyrxVNcetqxFX8TKR5EUj2g_6ubgzIbVE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "786536751449-dc53ia61singtm9rgrk6s3a069o9pote.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
