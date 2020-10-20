@@ -8,6 +8,7 @@ import {
   removeRefreshToken,
 } from './storage';
 import client from '../api/client';
+import logger from '../logging/logger';
 
 export default function useAuth() {
   const { member, setMember } = useContext(AuthContext);
@@ -19,6 +20,7 @@ export default function useAuth() {
       const { data } = await client.get('/member/self');
       if (setMember) setMember(data);
     } catch (ex) {
+      logger.log(ex);
       console.log(ex);
     }
   };

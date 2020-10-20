@@ -7,6 +7,7 @@ import Button from '../components/common/Button';
 import Text from '../components/common/Text';
 import TextInput from '../components/common/TextInput';
 import client from '../api/client';
+import logger from '../logging/logger';
 
 interface FormValues {
   oldPassword: string;
@@ -41,6 +42,7 @@ const PasswordChangeScreen: FC = () => {
       resetForm();
       setSuccessVisible(true);
     } catch (ex) {
+      logger.log(ex);
       console.log(ex);
     }
   };

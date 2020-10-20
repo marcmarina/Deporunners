@@ -9,6 +9,7 @@ import useAuth from '../auth/useAuth';
 import Icon from '../components/common/Icon';
 import Screen from '../components/common/Screen';
 import Text from '../components/common/Text';
+import logger from '../logging/logger';
 import { EventsStackParamList } from '../navigation/EventsNavigator';
 
 interface Props {
@@ -30,6 +31,7 @@ const EventDetailsScreen: FC<Props> = ({ route }) => {
         setEvent(data);
       }
     } catch (ex) {
+      logger.log(ex);
       console.log(ex);
     }
   };
@@ -39,6 +41,7 @@ const EventDetailsScreen: FC<Props> = ({ route }) => {
       const { data } = await client.get(`/event/${event._id}`);
       setEvent(data);
     } catch (ex) {
+      logger.log(ex);
       console.log(ex);
     }
   };

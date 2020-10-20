@@ -5,6 +5,7 @@ import client from '../api/client';
 import Screen from '../components/common/Screen';
 import EventListItem from '../components/EventListItem';
 import Event from '../interfaces/Event';
+import logger from '../logging/logger';
 
 const EventsScreen: FC = () => {
   const [events, setEvents] = useState<Event[]>();
@@ -22,6 +23,7 @@ const EventsScreen: FC = () => {
       setEvents(data);
       setLoading(false);
     } catch (ex) {
+      logger.log(ex);
       console.log(ex);
     }
   };
@@ -40,6 +42,7 @@ const EventsScreen: FC = () => {
 
       setLoading(false);
     } catch (ex) {
+      logger.log(ex);
       console.log(ex);
     }
   };

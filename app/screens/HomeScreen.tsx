@@ -8,6 +8,7 @@ import useAuth from '../auth/useAuth';
 import TextWithLabel from '../components/common/TextWithLabel';
 import client from '../api/client';
 import Icon from '../components/common/Icon';
+import logger from '../logging/logger';
 
 const HomeScreen: FunctionComponent = () => {
   let { member: authMember } = useAuth();
@@ -18,6 +19,7 @@ const HomeScreen: FunctionComponent = () => {
       const { data } = await client.get(`/member/${member?._id}`);
       if (data) setMember(data);
     } catch (ex) {
+      logger.log(ex);
       console.log(ex);
     }
   };

@@ -10,6 +10,7 @@ import Button from '../components/common/Button';
 import useAuth from '../auth/useAuth';
 import client from '../api/client';
 import { head } from 'lodash';
+import logger from '../logging/logger';
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required(),
@@ -49,7 +50,6 @@ const LoginScreen: FunctionComponent = () => {
       setIsSubmitting(false);
       login(data, refreshToken);
     } catch (ex) {
-      console.log({ ...ex });
       setIsSubmitting(false);
       if (ex?.response && ex.response.status === 400) {
         setErrorVisible(true);
@@ -57,6 +57,9 @@ const LoginScreen: FunctionComponent = () => {
       } else if (ex.code === 'ECONNABORTED') {
         setErrorVisible(true);
         setErrorText('Hi ha hagut un error connectant a la API');
+      } else {
+        logger.log(ex);
+        console.log(ex);
       }
     }
   };

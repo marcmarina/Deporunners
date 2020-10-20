@@ -12,6 +12,7 @@ import AuthContext from './app/auth/context';
 import navigationTheme from './app/navigation/navigationTheme';
 import { navigationRef } from './app/navigation/rootNavigation';
 import client from './app/api/client';
+import logger from './app/logging/logger';
 
 export default function App() {
   const [member, setMember] = useState<Member>();
@@ -38,6 +39,8 @@ export default function App() {
     'Montserrat-900': require('./app/assets/fonts/Montserrat/Montserrat-900.ttf'),
   });
 
+  logger.start();
+
   const restoreMember = async () => {
     try {
       if ((await getToken()) && (await getRefreshToken())) {
@@ -45,6 +48,7 @@ export default function App() {
         setMember(data);
       }
     } catch (ex) {
+      logger.log(ex);
       console.log(ex);
     }
   };
