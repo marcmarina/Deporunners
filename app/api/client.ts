@@ -1,10 +1,12 @@
 import axios from 'axios';
+
 import { getRefreshToken, getToken, storeToken } from '../auth/storage';
+import env from '../config/env';
 
 const instance = axios.create({
-  baseURL: process.env.API_URL,
+  baseURL: env.API_URL,
   headers: {
-    'x-api-token': process.env.API_TOKEN,
+    'x-api-token': env.API_TOKEN,
   },
   timeout: 4000,
 });

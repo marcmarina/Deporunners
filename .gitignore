@@ -13,3 +13,6 @@ web-build/
 .DS_Store
 .vscode
 .env
+.env.development
+.env.production
+.env.staging

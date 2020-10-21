@@ -48,8 +48,10 @@ export default function App() {
         setMember(data);
       }
     } catch (ex) {
-      logger.log(ex);
-      console.log(ex);
+      if (ex.response.status !== 401) {
+        logger.log(ex);
+        console.log(ex);
+      }
     }
   };
 
