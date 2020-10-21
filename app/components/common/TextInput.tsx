@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import {
   View,
   TextInput as RNTextInput,
@@ -8,21 +8,24 @@ import {
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from '../../config/colors';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 export interface TextInputProps extends RNTextInputProps {
   icon?: string;
-  width: React.ReactText;
-  placeholder: string;
+  width?: React.ReactText;
   style: ViewStyle;
 }
 
 const TextInput: FunctionComponent<TextInputProps> = ({
   icon,
-  width,
+  width = '100%',
   style,
   placeholder,
+  secureTextEntry,
   ...otherProps
 }) => {
+  const [secure, setSecure] = useState(secureTextEntry);
+
   return (
     <View style={[styles.container, { width: width }, style]}>
       {icon && (
@@ -30,15 +33,26 @@ const TextInput: FunctionComponent<TextInputProps> = ({
           name={icon}
           size={20}
           color={colors.medium}
-          style={styles.icon}
+          style={styles.leftIcon}
         />
       )}
       <RNTextInput
         placeholderTextColor={colors.medium}
         style={styles.input}
         placeholder={placeholder}
+        secureTextEntry={secure}
         {...otherProps}
       />
+      {secureTextEntry && (
+        <TouchableWithoutFeedback onPress={() => setSecure(!secure)}>
+          <MaterialCommunityIcons
+            name={`eye${secure ? '' : '-off'}`}
+            size={20}
+            color={colors.medium}
+            style={styles.rightIcon}
+          />
+        </TouchableWithoutFeedback>
+      )}
     </View>
   );
 };
@@ -52,8 +66,15 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     alignItems: 'center',
   },
-  icon: { marginRight: 10 },
-  input: { width: '100%' },
+  leftIcon: {
+    marginRight: 10,
+  },
+  rightIcon: {
+    marginLeft: 10,
+  },
+  input: {
+    flex: 1,
+  },
 });
 
 export default TextInput;

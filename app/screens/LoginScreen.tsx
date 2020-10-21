@@ -88,7 +88,6 @@ const LoginScreen: FunctionComponent = () => {
                 <TextInput
                   placeholder="DNI o Email"
                   icon="email"
-                  width="90%"
                   style={{ opacity: 0.9 }}
                   value={values.username}
                   onChangeText={text => setFieldValue('username', text)}
@@ -99,7 +98,6 @@ const LoginScreen: FunctionComponent = () => {
                   onChangeText={text => setFieldValue('password', text)}
                   placeholder="Contrasenya"
                   icon="lock"
-                  width="90%"
                   style={{ opacity: 0.9 }}
                   secureTextEntry
                 />
@@ -137,6 +135,7 @@ const styles = StyleSheet.create({
   form: {
     marginTop: 70,
     marginHorizontal: 20,
+    width: '80%',
   },
   text: {
     fontSize: 20,

@@ -70,8 +70,8 @@ const PasswordChangeScreen: FC = () => {
               style={{ opacity: 0.9 }}
               value={values.oldPassword}
               onChangeText={text => setFieldValue('oldPassword', text)}
-              keyboardType="email-address"
               secureTextEntry
+              keyboardType="default"
             />
             <TextInput
               placeholder="Nova contrasenya"
