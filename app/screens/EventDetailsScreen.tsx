@@ -2,6 +2,7 @@ import { RouteProp } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import React, { FC, useEffect, useState } from 'react';
 import { StyleSheet, View, ScrollView, TouchableOpacity } from 'react-native';
+import openMaps from 'react-native-open-maps';
 
 import client from '../api/client';
 import useAuth from '../auth/useAuth';
@@ -54,6 +55,8 @@ const EventDetailsScreen: FC<Props> = ({ route }) => {
 
   const attending = event.members.includes(member._id.toString());
 
+  const [latitude, longitude] = event.coordinates.replace(/,/g, '').split(' ');
+
   return (
     <Screen>
       <ScrollView
@@ -73,6 +76,24 @@ const EventDetailsScreen: FC<Props> = ({ route }) => {
           fontWeight="400"
         />
         <View style={styles.footer}>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() =>
+              openMaps({
+                latitude: parseFloat(latitude),
+                longitude: parseFloat(longitude),
+                zoom: 100,
+              })
+            }
+          >
+            <Icon
+              backgroundColor="dodgerblue"
+              iconColor="#f6f6f6"
+              name="map"
+              size={85}
+              style={styles.icon}
+            />
+          </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => handleAttend(true)}

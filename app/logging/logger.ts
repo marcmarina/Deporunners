@@ -7,6 +7,6 @@ const start = () =>
     debug: true, // Sentry will try to print out useful debugging information if something goes wrong with sending an event. Set this to `false` in production.
   });
 
-const log = (error: any) => Sentry.Native.captureException(error);
+const log = (error: any) => Sentry.Native.captureException({ ...error });
 
 export default { log, start };
