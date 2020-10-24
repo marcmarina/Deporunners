@@ -46,13 +46,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const goToMap = (coordinates: string) => {
-  const [latitude, longitude] = coordinates.replace(/,/g, '').split(' ');
-  openMap({
-    latitude: parseFloat(latitude),
-    longitude: parseFloat(longitude),
-    zoom: 50,
-  });
-};
-
 export default EventListItem;

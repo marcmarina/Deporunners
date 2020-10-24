@@ -2,7 +2,7 @@ import { RouteProp } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import React, { FC, useEffect, useState } from 'react';
 import { StyleSheet, View, ScrollView, TouchableOpacity } from 'react-native';
-import openMaps from 'react-native-open-maps';
+import openMap from 'react-native-open-maps';
 
 import client from '../api/client';
 import useAuth from '../auth/useAuth';
@@ -55,8 +55,6 @@ const EventDetailsScreen: FC<Props> = ({ route }) => {
 
   const attending = event.members.includes(member._id.toString());
 
-  const [latitude, longitude] = event.coordinates.replace(/,/g, '').split(' ');
-
   return (
     <Screen>
       <ScrollView
@@ -78,13 +76,7 @@ const EventDetailsScreen: FC<Props> = ({ route }) => {
         <View style={styles.footer}>
           <TouchableOpacity
             activeOpacity={0.7}
-            onPress={() =>
-              openMaps({
-                latitude: parseFloat(latitude),
-                longitude: parseFloat(longitude),
-                zoom: 100,
-              })
-            }
+            onPress={() => goToMap(event.coordinates)}
           >
             <Icon
               backgroundColor="dodgerblue"
@@ -155,5 +147,14 @@ const styles = StyleSheet.create({
     margin: 20,
   },
 });
+
+const goToMap = (coordinates: string) => {
+  const [latitude, longitude] = coordinates.replace(/,/g, '').split(' ');
+  openMap({
+    latitude: parseFloat(latitude),
+    longitude: parseFloat(longitude),
+    zoom: 50,
+  });
+};
 
 export default EventDetailsScreen;
