@@ -28,8 +28,8 @@ const validationSchema = Yup.object().shape({
 });
 
 const PasswordChangeScreen: FC = () => {
-  const [errorVisible, setErrorVisible] = useState(false);
-  const [errorText, setErrorText] = useState('');
+  const [errorVisible] = useState(false);
+  const [errorText] = useState('');
   const [successVisible, setSuccessVisible] = useState(false);
 
   const handleSubmit = async (
@@ -38,7 +38,7 @@ const PasswordChangeScreen: FC = () => {
   ) => {
     Keyboard.dismiss();
     try {
-      const { data } = await client.patch('/member/changepassword', values);
+      await client.patch('/member/changepassword', values);
       resetForm();
       setSuccessVisible(true);
     } catch (ex) {

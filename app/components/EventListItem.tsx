@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import dayjs from 'dayjs';
-import openMap from 'react-native-open-maps';
 import { useNavigation } from '@react-navigation/native';
 
 import Event from 'interfaces/Event';

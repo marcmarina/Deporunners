@@ -3,7 +3,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import AccountScreen from 'screens/AccountScreen';
 import PasswordChangeScreen from 'screens/PasswordChangeScreen';
-import colors from 'config/colors';
 
 export type EventsStackParamList = {
   AccountScreen: undefined;
@@ -13,14 +12,7 @@ export type EventsStackParamList = {
 const Stack = createStackNavigator<EventsStackParamList>();
 
 const AccountNavigator = () => (
-  <Stack.Navigator
-    initialRouteName="AccountScreen"
-    screenOptions={{
-      headerStyle: {
-        // backgroundColor: colors.secondary,
-      },
-    }}
-  >
+  <Stack.Navigator initialRouteName="AccountScreen">
     <Stack.Screen
       name="AccountScreen"
       component={AccountScreen}

@@ -10,7 +10,7 @@ import client from 'api/client';
 import logger from 'logging/logger';
 
 const HomeScreen: FunctionComponent = () => {
-  let { member: authMember } = useAuth();
+  const { member: authMember } = useAuth();
   const [member, setMember] = useState(authMember);
 
   const retrieveData = async () => {

@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from 'react';
-import { View, StyleSheet, Alert, Keyboard } from 'react-native';
-import { Formik, FormikHelpers } from 'formik';
+import { View, StyleSheet, Keyboard } from 'react-native';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 import Screen from 'components/common/Screen';
@@ -33,10 +33,7 @@ const LoginScreen: FunctionComponent = () => {
 
   const { login } = useAuth();
 
-  const handleSubmit = async (
-    { username, password }: FormValues,
-    { setFieldValue }: FormikHelpers<FormValues>
-  ) => {
+  const handleSubmit = async ({ username, password }: FormValues) => {
     Keyboard.dismiss();
     try {
       setIsSubmitting(true);

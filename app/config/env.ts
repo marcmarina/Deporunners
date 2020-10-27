@@ -2,7 +2,7 @@ import Constants from 'expo-constants';
 
 let API_URL, API_TOKEN;
 
-let releaseChannel = Constants.manifest.releaseChannel;
+const releaseChannel = Constants.manifest.releaseChannel;
 
 if (releaseChannel === undefined) {
   API_URL = process.env.API_URL;
