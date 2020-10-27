@@ -33,17 +33,17 @@ const EventDetailsScreen: FC<Props> = ({ route }) => {
       }
     } catch (ex) {
       logger.log(ex);
-      console.log(ex);
     }
   };
 
   const retrieveData = async () => {
     try {
-      const { data } = await client.get(`/event/${event._id}`);
-      setEvent(data);
+      const res = await client.get(`/event/${event._id}`);
+      if (res) {
+        setEvent(res.data);
+      }
     } catch (ex) {
       logger.log(ex);
-      console.log(ex);
     }
   };
 

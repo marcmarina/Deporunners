@@ -55,7 +55,6 @@ const LoginScreen: FunctionComponent = () => {
         setErrorText('Hi ha hagut un error connectant a la API');
       } else {
         logger.log(ex);
-        console.log(ex);
       }
     }
   };

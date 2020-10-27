@@ -17,11 +17,12 @@ export default function useAuth() {
     try {
       await storeToken(authToken);
       await storeRefreshToken(refreshToken);
-      const { data } = await client.get('/member/self');
-      if (setMember) setMember(data);
+      const res = await client.get('/member/self');
+      if (res && setMember) {
+        setMember(res.data);
+      }
     } catch (ex) {
       logger.log(ex);
-      console.log(ex);
     }
   };
 

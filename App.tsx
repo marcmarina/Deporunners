@@ -6,13 +6,20 @@ import { useFonts } from 'expo-font';
 
 import AppNavigator from 'navigation/AppNavigator';
 import LoginScreen from 'screens/LoginScreen';
-import { getRefreshToken, getToken } from 'auth/storage';
+import {
+  getRefreshToken,
+  getToken,
+  removeRefreshToken,
+  removeToken,
+} from 'auth/storage';
 import Member from 'interfaces/Member';
 import AuthContext from 'auth/context';
 import navigationTheme from 'navigation/navigationTheme';
 import { navigationRef } from 'navigation/rootNavigation';
 import client from 'api/client';
 import logger from 'logging/logger';
+
+import { DeviceEventEmitter } from 'react-native';
 
 export default function App() {
   const [member, setMember] = useState<Member>();
@@ -41,23 +48,22 @@ export default function App() {
 
   logger.start();
 
+  DeviceEventEmitter.addListener('userUnauthorized', async () => {
+    removeRefreshToken();
+    removeToken();
+    setMember(undefined);
+  });
+
   const restoreMember = async () => {
     try {
       if ((await getToken()) && (await getRefreshToken())) {
-        const { data } = await client.get('/member/self');
-        setMember(data);
+        const res = await client.get('/member/self');
+        if (res) {
+          setMember(res.data);
+        }
       }
     } catch (ex) {
-      if (ex.response.status !== 401) {
-        logger.log(ex);
-        console.log(ex);
-      }
-    }
-  };
-
-  const checkMember = async () => {
-    if (!(await getToken())) {
-      setMember(undefined);
+      logger.log(ex);
     }
   };
 
@@ -70,8 +76,6 @@ export default function App() {
     );
 
   if (!fontsLoaded) return null;
-
-  checkMember();
 
   return (
     <AuthContext.Provider value={{ member, setMember }}>

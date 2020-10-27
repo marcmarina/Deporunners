@@ -15,11 +15,12 @@ const HomeScreen: FunctionComponent = () => {
 
   const retrieveData = async () => {
     try {
-      const { data } = await client.get(`/member/${member?._id}`);
-      if (data) setMember(data);
+      const res = await client.get(`/member/${member?._id}`);
+      if (res) {
+        setMember(res.data);
+      }
     } catch (ex) {
       logger.log(ex);
-      console.log(ex);
     }
   };
 

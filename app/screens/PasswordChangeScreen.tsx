@@ -43,7 +43,6 @@ const PasswordChangeScreen: FC = () => {
       setSuccessVisible(true);
     } catch (ex) {
       logger.log(ex);
-      console.log(ex);
     }
   };
 

@@ -23,12 +23,13 @@ const EventsScreen: FC = () => {
   const retrieveData = async () => {
     try {
       setLoading(true);
-      const { data } = await client.get(`/event`);
-      setEvents(data);
+      const res = await client.get(`/event`);
+      if (res) {
+        setEvents(res.data);
+      }
       setLoading(false);
     } catch (ex) {
       logger.log(ex);
-      console.log(ex);
     }
   };
 
