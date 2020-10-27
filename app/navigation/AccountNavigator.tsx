@@ -1,9 +1,9 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import AccountScreen from '../screens/AccountScreen';
-import PasswordChangeScreen from '../screens/PasswordChangeScreen';
-import colors from '../config/colors';
+import AccountScreen from 'screens/AccountScreen';
+import PasswordChangeScreen from 'screens/PasswordChangeScreen';
+import colors from 'config/colors';
 
 export type EventsStackParamList = {
   AccountScreen: undefined;

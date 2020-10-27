@@ -3,11 +3,11 @@ import { Formik, FormikHelpers } from 'formik';
 import { View, StyleSheet, Keyboard } from 'react-native';
 import * as Yup from 'yup';
 
-import Button from '../components/common/Button';
-import Text from '../components/common/Text';
-import TextInput from '../components/common/TextInput';
-import client from '../api/client';
-import logger from '../logging/logger';
+import Button from 'components/common/Button';
+import Text from 'components/common/Text';
+import TextInput from 'components/common/TextInput';
+import client from 'api/client';
+import logger from 'logging/logger';
 
 interface FormValues {
   oldPassword: string;

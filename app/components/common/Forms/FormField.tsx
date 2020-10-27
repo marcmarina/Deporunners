@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { useFormikContext } from 'formik';
 
-import TextInput, { TextInputProps } from '../TextInput';
+import TextInput, { TextInputProps } from 'TextInput';
 // import ErrorMessage from './ErrorMessage';
 
 interface Props extends TextInputProps {

@@ -7,8 +7,8 @@ import {
   storeRefreshToken,
   removeRefreshToken,
 } from './storage';
-import client from '../api/client';
-import logger from '../logging/logger';
+import client from 'api/client';
+import logger from 'logging/logger';
 
 export default function useAuth() {
   const { member, setMember } = useContext(AuthContext);

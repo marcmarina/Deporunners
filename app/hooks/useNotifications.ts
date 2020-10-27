@@ -1,10 +1,10 @@
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 
-import expoPushTokensApi from '../api/expoPushTokens';
+import expoPushTokensApi from 'api/expoPushTokens';
 import { useEffect } from 'react';
-import navigation from '../navigation/rootNavigation';
-import logger from '../logging/logger';
+import navigation from 'navigation/rootNavigation';
+import logger from 'logging/logger';
 
 const useNotifications = () => {
   const registerForPushNotifications = async () => {

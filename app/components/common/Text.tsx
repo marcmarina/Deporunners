@@ -20,6 +20,7 @@ export interface TextProps extends RNTextProps {
     | '700'
     | '800'
     | '900';
+  fontSize?: number;
 }
 
 const Text: FC<TextProps> = ({
@@ -27,12 +28,17 @@ const Text: FC<TextProps> = ({
   style,
   fontFamily = 'Exo',
   fontWeight = 400,
+  fontSize,
   ...other
 }) => {
   return (
     <RNText
       style={[
-        { fontFamily: `${fontFamily}-${fontWeight}`, color: '#f6f6f6' },
+        {
+          fontFamily: `${fontFamily}-${fontWeight}`,
+          color: '#f6f6f6',
+          fontSize: fontSize,
+        },
         style,
       ]}
       {...other}

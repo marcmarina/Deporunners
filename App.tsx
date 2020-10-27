@@ -4,39 +4,39 @@ import { NavigationContainer } from '@react-navigation/native';
 import { AppLoading } from 'expo';
 import { useFonts } from 'expo-font';
 
-import AppNavigator from './app/navigation/AppNavigator';
-import LoginScreen from './app/screens/LoginScreen';
-import { getRefreshToken, getToken } from './app/auth/storage';
-import Member from './app/interfaces/Member';
-import AuthContext from './app/auth/context';
-import navigationTheme from './app/navigation/navigationTheme';
-import { navigationRef } from './app/navigation/rootNavigation';
-import client from './app/api/client';
-import logger from './app/logging/logger';
+import AppNavigator from 'navigation/AppNavigator';
+import LoginScreen from 'screens/LoginScreen';
+import { getRefreshToken, getToken } from 'auth/storage';
+import Member from 'interfaces/Member';
+import AuthContext from 'auth/context';
+import navigationTheme from 'navigation/navigationTheme';
+import { navigationRef } from 'navigation/rootNavigation';
+import client from 'api/client';
+import logger from 'logging/logger';
 
 export default function App() {
   const [member, setMember] = useState<Member>();
   const [isReady, setIsReady] = useState(false);
 
   const [fontsLoaded] = useFonts({
-    'Exo-100': require('./app/assets/fonts/Exo/Exo-100.ttf'),
-    'Exo-200': require('./app/assets/fonts/Exo/Exo-200.ttf'),
-    'Exo-300': require('./app/assets/fonts/Exo/Exo-300.ttf'),
-    'Exo-400': require('./app/assets/fonts/Exo/Exo-400.ttf'),
-    'Exo-500': require('./app/assets/fonts/Exo/Exo-500.ttf'),
-    'Exo-600': require('./app/assets/fonts/Exo/Exo-600.ttf'),
-    'Exo-700': require('./app/assets/fonts/Exo/Exo-700.ttf'),
-    'Exo-800': require('./app/assets/fonts/Exo/Exo-800.ttf'),
-    'Exo-900': require('./app/assets/fonts/Exo/Exo-900.ttf'),
-    'Montserrat-100': require('./app/assets/fonts/Montserrat/Montserrat-100.ttf'),
-    'Montserrat-200': require('./app/assets/fonts/Montserrat/Montserrat-200.ttf'),
-    'Montserrat-300': require('./app/assets/fonts/Montserrat/Montserrat-300.ttf'),
-    'Montserrat-400': require('./app/assets/fonts/Montserrat/Montserrat-400.ttf'),
-    'Montserrat-500': require('./app/assets/fonts/Montserrat/Montserrat-500.ttf'),
-    'Montserrat-600': require('./app/assets/fonts/Montserrat/Montserrat-600.ttf'),
-    'Montserrat-700': require('./app/assets/fonts/Montserrat/Montserrat-700.ttf'),
-    'Montserrat-800': require('./app/assets/fonts/Montserrat/Montserrat-800.ttf'),
-    'Montserrat-900': require('./app/assets/fonts/Montserrat/Montserrat-900.ttf'),
+    'Exo-100': require('assets/fonts/Exo/Exo-100.ttf'),
+    'Exo-200': require('assets/fonts/Exo/Exo-200.ttf'),
+    'Exo-300': require('assets/fonts/Exo/Exo-300.ttf'),
+    'Exo-400': require('assets/fonts/Exo/Exo-400.ttf'),
+    'Exo-500': require('assets/fonts/Exo/Exo-500.ttf'),
+    'Exo-600': require('assets/fonts/Exo/Exo-600.ttf'),
+    'Exo-700': require('assets/fonts/Exo/Exo-700.ttf'),
+    'Exo-800': require('assets/fonts/Exo/Exo-800.ttf'),
+    'Exo-900': require('assets/fonts/Exo/Exo-900.ttf'),
+    'Montserrat-100': require('assets/fonts/Montserrat/Montserrat-100.ttf'),
+    'Montserrat-200': require('assets/fonts/Montserrat/Montserrat-200.ttf'),
+    'Montserrat-300': require('assets/fonts/Montserrat/Montserrat-300.ttf'),
+    'Montserrat-400': require('assets/fonts/Montserrat/Montserrat-400.ttf'),
+    'Montserrat-500': require('assets/fonts/Montserrat/Montserrat-500.ttf'),
+    'Montserrat-600': require('assets/fonts/Montserrat/Montserrat-600.ttf'),
+    'Montserrat-700': require('assets/fonts/Montserrat/Montserrat-700.ttf'),
+    'Montserrat-800': require('assets/fonts/Montserrat/Montserrat-800.ttf'),
+    'Montserrat-900': require('assets/fonts/Montserrat/Montserrat-900.ttf'),
   });
 
   logger.start();
@@ -55,6 +55,12 @@ export default function App() {
     }
   };
 
+  const checkMember = async () => {
+    if (!(await getToken())) {
+      setMember(undefined);
+    }
+  };
+
   if (!isReady)
     return (
       <AppLoading
@@ -64,6 +70,8 @@ export default function App() {
     );
 
   if (!fontsLoaded) return null;
+
+  checkMember();
 
   return (
     <AuthContext.Provider value={{ member, setMember }}>

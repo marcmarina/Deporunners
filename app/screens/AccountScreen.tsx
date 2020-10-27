@@ -1,15 +1,15 @@
 import React, { FC } from 'react';
 import { View, StyleSheet, Alert } from 'react-native';
 
-import Text from '../components/common/Text';
-import Screen from '../components/common/Screen';
-import Button from '../components/common/Button';
-import useAuth from '../auth/useAuth';
+import Text from 'components/common/Text';
+import Screen from 'components/common/Screen';
+import Button from 'components/common/Button';
+import useAuth from 'auth/useAuth';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import colors from '../config/colors';
-import TextWithIcon from '../components/common/TextWithIcon';
+import colors from 'config/colors';
+import TextWithIcon from 'components/common/TextWithIcon';
 
-import navigation from '../navigation/rootNavigation';
+import navigation from 'navigation/rootNavigation';
 
 const AccountScreen: FC = () => {
   const { member, logout } = useAuth();

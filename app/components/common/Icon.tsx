@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, ViewStyle } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import colors from 'config/colors';
 
 interface Props {
   name: string;
@@ -13,7 +14,7 @@ interface Props {
 export default function Icon({
   name,
   size = 40,
-  backgroundColor = 'black',
+  backgroundColor = colors.primary,
   iconColor = 'white',
   style,
 }: Props) {

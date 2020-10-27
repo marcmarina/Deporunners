@@ -4,14 +4,14 @@ import React, { FC, useEffect, useState } from 'react';
 import { StyleSheet, View, ScrollView, TouchableOpacity } from 'react-native';
 import openMap from 'react-native-open-maps';
 
-import client from '../api/client';
-import useAuth from '../auth/useAuth';
+import client from 'api/client';
+import useAuth from 'auth/useAuth';
 
-import Icon from '../components/common/Icon';
-import Screen from '../components/common/Screen';
-import Text from '../components/common/Text';
-import logger from '../logging/logger';
-import { EventsStackParamList } from '../navigation/EventsNavigator';
+import Icon from 'components/common/Icon';
+import Screen from 'components/common/Screen';
+import Text from 'components/common/Text';
+import logger from 'logging/logger';
+import { EventsStackParamList } from 'navigation/EventsNavigator';
 
 interface Props {
   route: RouteProp<EventsStackParamList, 'EventDetails'>;

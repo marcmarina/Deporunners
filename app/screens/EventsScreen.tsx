@@ -1,16 +1,20 @@
 import React, { FC, useEffect, useState } from 'react';
-import { StyleSheet, FlatList, View } from 'react-native';
+import { StyleSheet, View, SectionList } from 'react-native';
 
-import client from '../api/client';
-import Screen from '../components/common/Screen';
-import EventListItem from '../components/EventListItem';
-import Event from '../interfaces/Event';
-import logger from '../logging/logger';
+import client from 'api/client';
+import useAuth from 'auth/useAuth';
+import Icon from 'components/common/Icon';
+import Screen from 'components/common/Screen';
+import Text from 'components/common/Text';
+import EventListItem from 'components/EventListItem';
+import Event from 'interfaces/Event';
+import logger from 'logging/logger';
 
 const EventsScreen: FC = () => {
   const [events, setEvents] = useState<Event[]>();
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
+
+  const { member } = useAuth();
 
   useEffect(() => {
     retrieveData();
@@ -19,7 +23,7 @@ const EventsScreen: FC = () => {
   const retrieveData = async () => {
     try {
       setLoading(true);
-      const { data } = await client.get(`/event?page=1&limit=10`);
+      const { data } = await client.get(`/event`);
       setEvents(data);
       setLoading(false);
     } catch (ex) {
@@ -28,47 +32,61 @@ const EventsScreen: FC = () => {
     }
   };
 
-  const retrieveMore = async () => {
-    try {
-      setLoading(true);
+  if (!events || !member) return null;
 
-      const { data } = await client.get(`/event?page=${page + 1}&limit=10`);
-
-      if (events && data.length > 0) {
-        const newEvents = [...events, ...data];
-        setEvents(newEvents);
+  const createSectionedEventList = (events: Event[]) => {
+    const attending: Event[] = [];
+    const rest: Event[] = [];
+    events.forEach(event => {
+      if (event.members.includes(member._id.toString())) {
+        attending.push(event);
+      } else {
+        rest.push(event);
       }
-      setPage(page + 1);
+    });
 
-      setLoading(false);
-    } catch (ex) {
-      logger.log(ex);
-      console.log(ex);
-    }
+    return [
+      {
+        title: 'Els teus events',
+        icon: () => <Icon name="heart" size={70} iconColor="tomato" />,
+        data: attending,
+      },
+      {
+        title: 'Altres events',
+        data: rest,
+      },
+    ];
   };
 
-  const increasePage = () => {
-    if (!loading) {
-      retrieveMore();
-    }
-  };
+  const sectionedEvents = createSectionedEventList(events);
 
   return (
     <Screen>
-      <FlatList
-        data={events}
+      <SectionList
+        sections={sectionedEvents}
         keyExtractor={item => item._id}
         contentContainerStyle={styles.list}
         showsVerticalScrollIndicator={false}
-        onRefresh={() => {
-          setPage(1);
-          retrieveData();
-        }}
+        onRefresh={retrieveData}
         refreshing={loading}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         renderItem={({ item }) => <EventListItem event={item} />}
-        onEndReached={increasePage}
-        onEndReachedThreshold={0.2}
+        renderSectionHeader={({ section: { title, icon } }) => (
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+          >
+            <Text
+              style={styles.header}
+              fontSize={25}
+              fontWeight="500"
+              text={title}
+            />
+            {icon && icon()}
+          </View>
+        )}
       />
     </Screen>
   );
@@ -80,6 +98,10 @@ const styles = StyleSheet.create({
   },
   separator: {
     marginTop: 10,
+  },
+  header: {
+    marginVertical: 10,
+    marginRight: 'auto',
   },
 });
 

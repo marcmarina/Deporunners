@@ -1,7 +1,14 @@
 import axios from 'axios';
 
-import { getRefreshToken, getToken, storeToken } from '../auth/storage';
-import env from '../config/env';
+import {
+  getRefreshToken,
+  getToken,
+  removeRefreshToken,
+  removeToken,
+  storeToken,
+} from 'auth/storage';
+
+import env from 'config/env';
 
 const instance = axios.create({
   baseURL: env.API_URL,
@@ -11,23 +18,27 @@ const instance = axios.create({
   timeout: 4000,
 });
 
-instance.interceptors.request.use(async config => {
+instance.interceptors.request.use(async request => {
   const token = await getToken();
   const refreshToken = await getRefreshToken();
-  config.headers = {
-    ...config.headers,
+  request.headers = {
+    ...request.headers,
     'x-auth-token': `${token}`,
     'x-refresh-token': `${refreshToken}`,
   };
-  return config;
+  return request;
 });
 
-instance.interceptors.response.use(async config => {
-  const returnedToken = config.headers['x-auth-token'];
+instance.interceptors.response.use(async response => {
+  if (response.status === 401) {
+    removeRefreshToken();
+    removeToken();
+  }
+  const returnedToken = response.headers['x-auth-token'];
   if (returnedToken && returnedToken !== (await getToken())) {
     await storeToken(returnedToken);
   }
-  return config;
+  return response;
 });
 
 export default {

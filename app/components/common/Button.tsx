@@ -6,8 +6,8 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import Text from '../common/Text';
-import colors from '../../config/colors';
+import Text from 'components/common/Text';
+import colors from 'config/colors';
 
 interface Props extends TouchableOpacityProps {
   title: string;

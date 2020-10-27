@@ -7,7 +7,7 @@ import {
   TextInputProps as RNTextInputProps,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import colors from '../../config/colors';
+import colors from 'config/colors';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 export interface TextInputProps extends RNTextInputProps {

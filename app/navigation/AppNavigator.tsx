@@ -1,11 +1,11 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import HomeScreen from '../screens/HomeScreen';
-import colors from '../config/colors';
-import TabBarIcon from '../components/common/TabBarIcon';
+import HomeScreen from 'screens/HomeScreen';
+import colors from 'config/colors';
+import TabBarIcon from 'components/common/TabBarIcon';
 import EventsNavigator from './EventsNavigator';
-import useNotifications from '../hooks/useNotifications';
+import useNotifications from 'hooks/useNotifications';
 import AccountNavigator from './AccountNavigator';
 
 const Tab = createBottomTabNavigator();

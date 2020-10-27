@@ -4,8 +4,8 @@ import dayjs from 'dayjs';
 import openMap from 'react-native-open-maps';
 import { useNavigation } from '@react-navigation/native';
 
-import Event from '../interfaces/Event';
-import colors from '../config/colors';
+import Event from 'interfaces/Event';
+import colors from 'config/colors';
 import Text from './common/Text';
 
 interface Props {

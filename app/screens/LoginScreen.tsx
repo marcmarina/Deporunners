@@ -3,14 +3,13 @@ import { View, StyleSheet, Alert, Keyboard } from 'react-native';
 import { Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 
-import Screen from '../components/common/Screen';
-import Text from '../components/common/Text';
-import TextInput from '../components/common/TextInput';
-import Button from '../components/common/Button';
-import useAuth from '../auth/useAuth';
-import client from '../api/client';
-import { head } from 'lodash';
-import logger from '../logging/logger';
+import Screen from 'components/common/Screen';
+import Text from 'components/common/Text';
+import TextInput from 'components/common/TextInput';
+import Button from 'components/common/Button';
+import useAuth from 'auth/useAuth';
+import client from 'api/client';
+import logger from 'logging/logger';
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required(),

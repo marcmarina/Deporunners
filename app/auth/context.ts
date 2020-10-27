@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Member from '../interfaces/Member';
+import Member from 'interfaces/Member';
 
 interface MemberContext {
   member: Member;

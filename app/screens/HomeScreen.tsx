@@ -2,12 +2,12 @@ import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import padStart from 'lodash/padStart';
 
-import Screen from '../components/common/Screen';
-import Text from '../components/common/Text';
-import useAuth from '../auth/useAuth';
-import TextWithLabel from '../components/common/TextWithLabel';
-import client from '../api/client';
-import logger from '../logging/logger';
+import Screen from 'components/common/Screen';
+import Text from 'components/common/Text';
+import useAuth from 'auth/useAuth';
+import TextWithLabel from 'components/common/TextWithLabel';
+import client from 'api/client';
+import logger from 'logging/logger';
 
 const HomeScreen: FunctionComponent = () => {
   let { member: authMember } = useAuth();
@@ -32,7 +32,7 @@ const HomeScreen: FunctionComponent = () => {
   return (
     <Screen style={styles.container}>
       <Image
-        source={require('../assets/applogo_round.png')}
+        source={require('assets/applogo_round.png')}
         style={styles.image}
       />
       <View style={styles.infoContainer}>
