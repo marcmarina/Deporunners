@@ -4,6 +4,7 @@
     "slug": "Deporunners",
     "version": "0.1.0",
     "orientation": "portrait",
+    "githubUrl": "https://github.com/marcmarina/Deporunners",
     "icon": "./app/assets/deporunners-filled.png",
     "splash": {
       "image": "./app/assets/splash.png",
@@ -13,9 +14,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "bundleIdentifier": "com.cedeporunners.deporunners",
       "buildNumber": "0.1.0"
