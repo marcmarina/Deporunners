@@ -21,7 +21,7 @@
     },
     "android": {
       "package": "com.cedeporunners.deporunners",
-      "versionCode": 2,
+      "versionCode": 3,
       "googleServicesFile": "./google-services.json"
     }
   }
