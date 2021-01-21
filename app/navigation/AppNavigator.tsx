@@ -7,6 +7,7 @@ import TabBarIcon from 'components/common/TabBarIcon';
 import EventsNavigator from './EventsNavigator';
 import useNotifications from 'hooks/useNotifications';
 import AccountNavigator from './AccountNavigator';
+import ClothingNavigator from './ClothingNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,6 +29,13 @@ const AppNavigator = () => {
         },
       }}
     >
+      <Tab.Screen
+        name="Roba"
+        component={ClothingNavigator}
+        options={{
+          tabBarIcon: props => <TabBarIcon name="account" {...props} />,
+        }}
+      />
       <Tab.Screen
         name="Events"
         component={EventsNavigator}
