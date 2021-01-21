@@ -38,12 +38,8 @@ const ClothingScreen: FC = () => {
         data={clothing}
         renderItem={({ item }) => <RenderClothing item={item} />}
         keyExtractor={item => item._id}
-        contentContainerStyle={{
-          alignContent: 'flex-start',
-          justifyContent: 'center',
-          padding: 10,
-        }}
-        ItemSeparatorComponent={() => <View style={{ margin: 5 }} />}
+        contentContainerStyle={styles.list}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
       />
     </Screen>
   );
@@ -51,7 +47,7 @@ const ClothingScreen: FC = () => {
 
 const RenderClothing = ({ item }: { item: Clothing }) => {
   return (
-    <View style={styles2.container}>
+    <View style={styles.container}>
       <Image
         style={{
           flex: 1,
@@ -82,25 +78,18 @@ const RenderClothing = ({ item }: { item: Clothing }) => {
   );
 };
 
-const styles2 = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     height: 500,
     backgroundColor: 'white',
     borderRadius: 10,
     overflow: 'hidden',
   },
-});
-
-const styles = StyleSheet.create({
   list: {
     padding: 10,
   },
   separator: {
     marginTop: 10,
-  },
-  header: {
-    marginVertical: 10,
-    marginRight: 'auto',
   },
 });
 
