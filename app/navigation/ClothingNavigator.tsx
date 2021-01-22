@@ -2,21 +2,31 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import ClothingScreen from 'screens/ClothingScreen';
+import Clothing from 'interfaces/Clothing';
+import ClothingDetailsScreen from 'screens/ClothingDetailsScreen';
 
-export type EventsStackParamList = {
+export type ClothingStackParamList = {
   ClothingScreen: undefined;
+  ClothingDetails: {
+    clothing: Clothing;
+  };
 };
 
-const Stack = createStackNavigator<EventsStackParamList>();
+const Stack = createStackNavigator<ClothingStackParamList>();
 
-const AccountNavigator = () => (
+const ClothingNavigator = () => (
   <Stack.Navigator initialRouteName="ClothingScreen">
     <Stack.Screen
       name="ClothingScreen"
       component={ClothingScreen}
       options={{ headerShown: false }}
     />
+    <Stack.Screen
+      name="ClothingDetails"
+      component={ClothingDetailsScreen}
+      options={{ headerShown: false }}
+    />
   </Stack.Navigator>
 );
 
-export default AccountNavigator;
+export default ClothingNavigator;

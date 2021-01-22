@@ -7,8 +7,9 @@ import Screen from 'components/common/Screen';
 import Text from 'components/common/Text';
 import logger from 'logging/logger';
 import Clothing from 'interfaces/Clothing';
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 import env from 'config/env';
+import { useNavigation } from '@react-navigation/native';
 
 const ClothingScreen: FC = () => {
   const [clothing, setClothing] = useState<Clothing[]>();
@@ -46,8 +47,17 @@ const ClothingScreen: FC = () => {
 };
 
 const RenderClothing = ({ item }: { item: Clothing }) => {
+  const { navigate } = useNavigation();
+
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() =>
+        navigate('ClothingDetails', {
+          clothing: item,
+        })
+      }
+    >
       <Image
         style={{
           flex: 1,
@@ -64,17 +74,17 @@ const RenderClothing = ({ item }: { item: Clothing }) => {
         }}
       >
         <Text
-          text={item.name}
+          text={`${item.name}`}
           fontWeight="600"
           style={{ fontSize: 25, color: '#404040', flex: 1, margin: 10 }}
         />
         <Text
-          text={`${item.price.toString()} €`}
+          text={`${item.price.toFixed(2).toString()}€`}
           fontWeight="600"
           style={{ fontSize: 25, color: '#64A731', margin: 10 }}
         />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
