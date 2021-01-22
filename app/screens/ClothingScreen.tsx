@@ -8,8 +8,8 @@ import Text from 'components/common/Text';
 import logger from 'logging/logger';
 import Clothing from 'interfaces/Clothing';
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
-import env from 'config/env';
 import { useNavigation } from '@react-navigation/native';
+import env from 'config/env';
 
 const ClothingScreen: FC = () => {
   const [clothing, setClothing] = useState<Clothing[]>();
@@ -34,7 +34,7 @@ const ClothingScreen: FC = () => {
   if (!clothing || !member) return null;
 
   return (
-    <Screen>
+    <Screen style={{ paddingTop: 0 }}>
       <FlatList
         data={clothing}
         renderItem={({ item }) => <RenderClothing item={item} />}

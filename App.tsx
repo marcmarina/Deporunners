@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-
+import { DeviceEventEmitter } from 'react-native';
+import * as eva from '@eva-design/eva';
+import { ApplicationProvider } from '@ui-kitten/components';
 import { AppLoading } from 'expo';
 import { useFonts } from 'expo-font';
 
@@ -18,8 +20,6 @@ import navigationTheme from 'navigation/navigationTheme';
 import { navigationRef } from 'navigation/rootNavigation';
 import client from 'api/client';
 import logger from 'logging/logger';
-
-import { DeviceEventEmitter } from 'react-native';
 
 export default function App() {
   const [member, setMember] = useState<Member>();
@@ -78,10 +78,12 @@ export default function App() {
   if (!fontsLoaded) return null;
 
   return (
-    <AuthContext.Provider value={{ member, setMember }}>
-      <NavigationContainer ref={navigationRef} theme={navigationTheme}>
-        {member ? <AppNavigator /> : <LoginScreen />}
-      </NavigationContainer>
-    </AuthContext.Provider>
+    <ApplicationProvider {...eva} theme={eva.dark}>
+      <AuthContext.Provider value={{ member, setMember }}>
+        <NavigationContainer ref={navigationRef} theme={navigationTheme}>
+          {member ? <AppNavigator /> : <LoginScreen />}
+        </NavigationContainer>
+      </AuthContext.Provider>
+    </ApplicationProvider>
   );
 }

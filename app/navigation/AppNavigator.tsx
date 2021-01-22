@@ -33,7 +33,7 @@ const AppNavigator = () => {
         name="Roba"
         component={ClothingNavigator}
         options={{
-          tabBarIcon: props => <TabBarIcon name="account" {...props} />,
+          tabBarIcon: props => <TabBarIcon name="tshirt-crew" {...props} />,
         }}
       />
       <Tab.Screen

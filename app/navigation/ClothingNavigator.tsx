@@ -19,7 +19,7 @@ const ClothingNavigator = () => (
     <Stack.Screen
       name="ClothingScreen"
       component={ClothingScreen}
-      options={{ headerShown: false }}
+      options={{ headerShown: true, headerTitle: 'Catàleg de roba' }}
     />
     <Stack.Screen
       name="ClothingDetails"
