@@ -7,7 +7,10 @@ import Screen from 'components/common/Screen';
 import Text from 'components/common/Text';
 import logger from 'logging/logger';
 import Clothing from 'interfaces/Clothing';
-import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
+import {
+  FlatList,
+  TouchableWithoutFeedback,
+} from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import env from 'config/env';
 
@@ -50,7 +53,7 @@ const RenderClothing = ({ item }: { item: Clothing }) => {
   const { navigate } = useNavigation();
 
   return (
-    <TouchableOpacity
+    <TouchableWithoutFeedback
       style={styles.container}
       onPress={() =>
         navigate('ClothingDetails', {
@@ -84,7 +87,7 @@ const RenderClothing = ({ item }: { item: Clothing }) => {
           style={{ fontSize: 25, color: '#64A731', margin: 10 }}
         />
       </View>
-    </TouchableOpacity>
+    </TouchableWithoutFeedback>
   );
 };
 
