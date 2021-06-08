@@ -7,7 +7,9 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.json",
-    "lint-and-fix": "eslint . --ext .ts,.tsx,.js,.jsx,.json --fix"
+    "lint-and-fix": "eslint . --ext .ts,.tsx,.js,.jsx,.json --fix",
+    "build:android": "expo build:android --release-channel",
+    "publish": "expo publish --release-channel"
   },
   "dependencies": {
     "@react-native-community/async-storage": "~1.11.0",
