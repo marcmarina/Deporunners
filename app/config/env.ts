@@ -1,6 +1,6 @@
-import Constants from 'expo-constants';
+import * as Updates from 'expo-updates';
 
-const releaseChannel = Constants.manifest.releaseChannel;
+const releaseChannel = Updates.releaseChannel;
 
 export const env = () => {
   switch (releaseChannel) {

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
 import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
+import * as Updates from 'expo-updates';
 
 import AppNavigator from 'navigation/AppNavigator';
 import LoginScreen from 'screens/LoginScreen';
@@ -18,8 +19,17 @@ import navigationTheme from 'navigation/navigationTheme';
 import { navigationRef } from 'navigation/rootNavigation';
 import client from 'api/client';
 import logger from 'logging/logger';
+import Button from 'components/common/Button';
 
-import { DeviceEventEmitter } from 'react-native';
+import {
+  DeviceEventEmitter,
+  EventSubscription,
+  Modal,
+  StyleSheet,
+  View,
+} from 'react-native';
+import Text from 'components/common/Text';
+import colors from 'config/colors';
 
 export default function App() {
   const [member, setMember] = useState<Member>();
@@ -80,9 +90,76 @@ export default function App() {
 
   return (
     <AuthContext.Provider value={{ member, setMember }}>
+      <UpdateHandler />
       <NavigationContainer ref={navigationRef} theme={navigationTheme}>
         {member ? <AppNavigator /> : <LoginScreen />}
       </NavigationContainer>
     </AuthContext.Provider>
   );
 }
+
+function UpdateHandler() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const updates: EventSubscription = Updates.addListener(
+      (event: Updates.UpdateEvent) => {
+        if (event.type === Updates.UpdateEventType.UPDATE_AVAILABLE) {
+          setVisible(true);
+        }
+      }
+    );
+
+    return () => {
+      updates.remove();
+    };
+  });
+
+  return (
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={visible}
+      onRequestClose={() => {
+        setVisible(false);
+      }}
+    >
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
+          <Text
+            text="Hi ha una nova actualització disponible!"
+            style={styles.textStyle}
+            fontWeight="600"
+            fontSize={24}
+          />
+          <Button
+            color="green"
+            title="Actualitzar"
+            onPress={() => Updates.reloadAsync()}
+          />
+        </View>
+      </View>
+    </Modal>
+  );
+}
+
+const styles = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalView: {
+    width: '65%',
+    backgroundColor: colors.secondary,
+    borderRadius: 20,
+    padding: 15,
+    alignItems: 'center',
+    elevation: 5,
+  },
+  textStyle: {
+    color: 'white',
+    textAlign: 'center',
+    marginBottom: 30,
+  },
+});
