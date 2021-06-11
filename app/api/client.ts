@@ -2,15 +2,15 @@ import axios from 'axios';
 
 import { getRefreshToken, getToken, storeToken } from 'auth/storage';
 
-import env from 'config/env';
 import { DeviceEventEmitter } from 'react-native';
+import { env } from 'config/env';
 
 const cancelTokenSource = axios.CancelToken.source();
 
 const instance = axios.create({
-  baseURL: env.API_URL,
+  baseURL: env().API_URL,
   headers: {
-    'x-api-token': env.API_TOKEN,
+    'x-api-token': env().API_TOKEN,
   },
   timeout: 4000,
   cancelToken: cancelTokenSource.token,
