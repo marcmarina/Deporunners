@@ -9,9 +9,10 @@ import {
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from 'config/colors';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { IconName } from './Icon';
 
 export interface TextInputProps extends RNTextInputProps {
-  icon?: string;
+  icon?: IconName;
   width?: React.ReactText;
   style: ViewStyle;
 }
@@ -46,7 +47,7 @@ const TextInput: FunctionComponent<TextInputProps> = ({
       {secureTextEntry && (
         <TouchableWithoutFeedback onPress={() => setSecure(!secure)}>
           <MaterialCommunityIcons
-            name={`eye${secure ? '' : '-off'}`}
+            name={`eye${secure ? '' : '-off'}` as IconName}
             size={20}
             color={colors.medium}
             style={styles.rightIcon}

@@ -8,7 +8,7 @@ export default ({ config }: ConfigContext) => {
         {
           file: 'sentry-expo/upload-sourcemaps',
           config: {
-            organization: 'none',
+            organization: 'deporunners',
             project: 'deporunners',
             authToken: process.env.SENTRY_AUTH_TOKEN,
           },

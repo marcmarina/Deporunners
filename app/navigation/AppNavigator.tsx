@@ -5,13 +5,13 @@ import HomeScreen from 'screens/HomeScreen';
 import colors from 'config/colors';
 import TabBarIcon from 'components/common/TabBarIcon';
 import EventsNavigator from './EventsNavigator';
-import useNotifications from 'hooks/useNotifications';
+// import useNotifications from 'hooks/useNotifications';
 import AccountNavigator from './AccountNavigator';
 
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => {
-  useNotifications();
+  // useNotifications();
 
   return (
     <Tab.Navigator
@@ -40,7 +40,7 @@ const AppNavigator = () => {
         component={HomeScreen}
         options={{
           tabBarIcon: props => (
-            <TabBarIcon name="account-card-details" {...props} />
+            <TabBarIcon name="card-account-details" {...props} />
           ),
         }}
       />

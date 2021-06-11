@@ -1,8 +1,9 @@
 import React from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { IconName } from './Icon';
 
 interface Props {
-  name: string;
+  name: IconName;
   color: string;
   size: number;
   focused: boolean;
@@ -11,7 +12,7 @@ interface Props {
 export default function TabBarIcon({ color, size, focused, name }: Props) {
   return (
     <MaterialCommunityIcons
-      name={`${name}${focused ? '' : '-outline'}`}
+      name={`${name}${focused ? '' : '-outline'}` as IconName}
       color={color}
       size={size}
     />

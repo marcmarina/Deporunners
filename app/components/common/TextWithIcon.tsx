@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
-import Icon from './Icon';
+import Icon, { IconName } from './Icon';
 import Text from './Text';
 
 interface Props {
   text: string;
-  icon: string;
+  icon: IconName;
   iconColor: string;
   iconBgColor: string;
   size: number;

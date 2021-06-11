@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
-import { AppLoading } from 'expo';
+import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
 
 import AppNavigator from 'navigation/AppNavigator';
@@ -72,6 +72,7 @@ export default function App() {
       <AppLoading
         startAsync={restoreMember}
         onFinish={() => setIsReady(true)}
+        onError={logger.log}
       />
     );
 
