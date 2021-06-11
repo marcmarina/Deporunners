@@ -22,7 +22,7 @@
     },
     "android": {
       "package": "com.cedeporunners.deporunners",
-      "versionCode": 5,
+      "versionCode": 6,
       "googleServicesFile": "./google-services.json",
       "permissions": []
     }
