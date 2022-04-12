@@ -8,8 +8,9 @@ import Text from 'components/common/Text';
 import TextInput from 'components/common/TextInput';
 import Button from 'components/common/Button';
 import useAuth from 'auth/useAuth';
-import client from 'api/client';
-import logger from 'logging/logger';
+import { http } from 'api';
+import { logger } from 'logging';
+import { useMutation } from 'react-query';
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required(),
@@ -27,31 +28,31 @@ const initialValues = {
 };
 
 const LoginScreen: FunctionComponent = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorVisible, setErrorVisible] = useState(false);
-  const [errorText, setErrorText] = useState('');
+  const [errorText, setErrorText] = useState<string | null>(null);
+
+  const loginMutation = useMutation(async (values: any) => {
+    console.dir(values);
+
+    return http.post('/member/login', values);
+  });
 
   const { login } = useAuth();
 
   const handleSubmit = async ({ username, password }: FormValues) => {
     Keyboard.dismiss();
     try {
-      setIsSubmitting(true);
-      setErrorVisible(false);
-      const { data, headers } = await client.post('/member/login', {
+      setErrorText(null);
+      const { data, headers } = await loginMutation.mutateAsync({
         username,
         password,
       });
       const refreshToken = headers['x-refresh-token'];
-      setIsSubmitting(false);
       login(data, refreshToken);
     } catch (ex) {
-      setIsSubmitting(false);
-      if (ex?.response && ex.response.status === 400) {
-        setErrorVisible(true);
+      console.log(ex);
+      if (ex?.response?.status === 401) {
         setErrorText('Les dades introduïdes no són valides');
       } else if (ex.code === 'ECONNABORTED') {
-        setErrorVisible(true);
         setErrorText('Hi ha hagut un error connectant a la API');
       } else {
         logger.log(ex);
@@ -78,19 +79,19 @@ const LoginScreen: FunctionComponent = () => {
             onSubmit={handleSubmit}
             validationSchema={validationSchema}
           >
-            {({ submitForm, values, setFieldValue }) => (
+            {({ submitForm, values, setFieldValue, isSubmitting }) => (
               <View style={{ display: 'flex', alignItems: 'center' }}>
                 <TextInput
                   placeholder="DNI o Email"
                   icon="email"
                   style={{ opacity: 0.9 }}
                   value={values.username}
-                  onChangeText={text => setFieldValue('username', text)}
+                  onChangeText={(text) => setFieldValue('username', text)}
                   keyboardType="email-address"
                 />
                 <TextInput
                   value={values.password}
-                  onChangeText={text => setFieldValue('password', text)}
+                  onChangeText={(text) => setFieldValue('password', text)}
                   placeholder="Contrasenya"
                   icon="lock"
                   style={{ opacity: 0.9 }}
@@ -103,7 +104,7 @@ const LoginScreen: FunctionComponent = () => {
                   title="Iniciar Sessió"
                 />
                 <View style={styles.errorContainer}>
-                  {errorVisible && (
+                  {errorText && (
                     <Text
                       style={styles.errorMessage}
                       text={errorText}

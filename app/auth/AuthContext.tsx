@@ -1,6 +1,5 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 
-import AuthContext from './context';
 import {
   storeToken,
   removeToken,
@@ -10,7 +9,28 @@ import {
 import { http } from 'api';
 import { logger } from 'logging';
 
-export default function useAuth() {
+import React from 'react';
+
+import Member from 'interfaces/Member';
+
+interface MemberContext {
+  member: Member;
+  setMember: React.Dispatch<React.SetStateAction<Member | undefined>>;
+}
+
+const AuthContext = React.createContext<Partial<MemberContext>>({});
+
+export const AuthContextProvider = ({ children }) => {
+  const [member, setMember] = useState<Member>();
+
+  return (
+    <AuthContext.Provider value={{ member, setMember }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export function useAuth() {
   const { member, setMember } = useContext(AuthContext);
 
   const login = async (authToken: any, refreshToken: any) => {

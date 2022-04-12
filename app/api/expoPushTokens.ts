@@ -1,6 +1,6 @@
-import client from './client';
+import http from './http';
 
 const register = (pushToken: string) =>
-  client.post('/member/expoPushToken', { token: pushToken });
+  http.post('/member/expoPushToken', { token: pushToken });
 
 export default { register };

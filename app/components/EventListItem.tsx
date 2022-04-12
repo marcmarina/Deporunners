@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import { useNavigation } from '@react-navigation/native';
 
 import Event from 'interfaces/Event';
-import colors from 'config/colors';
+import { colors } from 'config';
 import Text from './common/Text';
 
 interface Props {

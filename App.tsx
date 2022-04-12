@@ -17,8 +17,8 @@ import Member from 'interfaces/Member';
 import AuthContext from 'auth/context';
 import navigationTheme from 'navigation/navigationTheme';
 import { navigationRef } from 'navigation/rootNavigation';
-import client from 'api/client';
-import logger from 'logging/logger';
+import { http } from 'api';
+import { logger } from 'logging';
 import Button from 'components/common/Button';
 
 import {
@@ -29,7 +29,10 @@ import {
   View,
 } from 'react-native';
 import Text from 'components/common/Text';
-import colors from 'config/colors';
+import { colors } from 'config';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+const queryClient = new QueryClient();
 
 export default function App() {
   const [member, setMember] = useState<Member>();
@@ -67,7 +70,7 @@ export default function App() {
   const restoreMember = async () => {
     try {
       if ((await getToken()) && (await getRefreshToken())) {
-        const res = await client.get('/member/self');
+        const res = await http.get('/member/self');
         if (res) {
           setMember(res.data);
         }
@@ -89,12 +92,14 @@ export default function App() {
   if (!fontsLoaded) return null;
 
   return (
-    <AuthContext.Provider value={{ member, setMember }}>
-      <UpdateHandler />
-      <NavigationContainer ref={navigationRef} theme={navigationTheme}>
-        {member ? <AppNavigator /> : <LoginScreen />}
-      </NavigationContainer>
-    </AuthContext.Provider>
+    <QueryClientProvider client={queryClient}>
+      <AuthContext.Provider value={{ member, setMember }}>
+        <UpdateHandler />
+        <NavigationContainer ref={navigationRef} theme={navigationTheme}>
+          {member ? <AppNavigator /> : <LoginScreen />}
+        </NavigationContainer>
+      </AuthContext.Provider>
+    </QueryClientProvider>
   );
 }
 

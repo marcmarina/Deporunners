@@ -1,34 +1,23 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import padStart from 'lodash/padStart';
 
 import Screen from 'components/common/Screen';
 import Text from 'components/common/Text';
-import useAuth from 'auth/useAuth';
 import TextWithLabel from 'components/common/TextWithLabel';
-import client from 'api/client';
-import logger from 'logging/logger';
+import { http } from 'api';
+import { useQuery } from 'react-query';
 
 const HomeScreen: FunctionComponent = () => {
-  const { member: authMember } = useAuth();
-  const [member, setMember] = useState(authMember);
+  const { data: member, isLoading } = useQuery('member', async () => {
+    const res = await http.get(`/member/self`);
 
-  const retrieveData = async () => {
-    try {
-      const res = await client.get(`/member/${member?._id}`);
-      if (res) {
-        setMember(res.data);
-      }
-    } catch (ex) {
-      logger.log(ex);
-    }
-  };
+    return res.data;
+  });
 
-  useEffect(() => {
-    retrieveData();
-  }, []);
+  if (isLoading) return null;
 
-  if (!member) return null;
+  const { firstName, lastName, dni, numMember, telephone } = member;
 
   return (
     <Screen style={styles.container}>
@@ -38,24 +27,24 @@ const HomeScreen: FunctionComponent = () => {
       />
       <View style={styles.infoContainer}>
         <Text
-          text={member.firstName + ' ' + member.lastName}
+          text={`${firstName} ${lastName}`}
           fontWeight="600"
           style={styles.fullName}
         />
         <TextWithLabel
-          text={member.dni}
+          text={dni}
           label="DNI: "
           fontWeight="600"
           style={styles.dni}
         />
         <TextWithLabel
-          text={padStart(member.numMember.toString(), 3, '0')}
+          text={padStart(numMember.toString(), 3, '0')}
           label="Núm Soci: "
           fontWeight="600"
           style={styles.dni}
         />
         <TextWithLabel
-          text={member.telephone}
+          text={telephone}
           label="Telèfon: "
           fontWeight="600"
           style={styles.dni}

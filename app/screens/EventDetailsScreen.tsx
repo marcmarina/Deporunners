@@ -4,13 +4,13 @@ import React, { FC, useEffect, useState } from 'react';
 import { StyleSheet, View, ScrollView, TouchableOpacity } from 'react-native';
 import openMap from 'react-native-open-maps';
 
-import client from 'api/client';
+import { http } from 'api';
 import useAuth from 'auth/useAuth';
 
 import Icon from 'components/common/Icon';
 import Screen from 'components/common/Screen';
 import Text from 'components/common/Text';
-import logger from 'logging/logger';
+import { logger } from 'logging';
 import { EventsStackParamList } from 'navigation/EventsNavigator';
 
 interface Props {
@@ -25,7 +25,7 @@ const EventDetailsScreen: FC<Props> = ({ route }) => {
 
   const handleAttend = async (attending: boolean) => {
     try {
-      const { data, status } = await client.patch(
+      const { data, status } = await http.patch(
         `/event/${event._id}/attend?attending=${attending}`
       );
       if (status === 201) {
@@ -38,7 +38,7 @@ const EventDetailsScreen: FC<Props> = ({ route }) => {
 
   const retrieveData = async () => {
     try {
-      const res = await client.get(`/event/${event._id}`);
+      const res = await http.get(`/event/${event._id}`);
       if (res) {
         setEvent(res.data);
       }

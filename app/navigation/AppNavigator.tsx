@@ -2,17 +2,14 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import HomeScreen from 'screens/HomeScreen';
-import colors from 'config/colors';
+import { colors } from 'config';
 import TabBarIcon from 'components/common/TabBarIcon';
 import EventsNavigator from './EventsNavigator';
-// import useNotifications from 'hooks/useNotifications';
 import AccountNavigator from './AccountNavigator';
 
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => {
-  // useNotifications();
-
   return (
     <Tab.Navigator
       initialRouteName="Carnet"
@@ -32,14 +29,16 @@ const AppNavigator = () => {
         name="Events"
         component={EventsNavigator}
         options={{
-          tabBarIcon: props => <TabBarIcon name="calendar-month" {...props} />,
+          tabBarIcon: (props) => (
+            <TabBarIcon name="calendar-month" {...props} />
+          ),
         }}
       />
       <Tab.Screen
         name="Carnet"
         component={HomeScreen}
         options={{
-          tabBarIcon: props => (
+          tabBarIcon: (props) => (
             <TabBarIcon name="card-account-details" {...props} />
           ),
         }}
@@ -48,7 +47,7 @@ const AppNavigator = () => {
         name="Compte"
         component={AccountNavigator}
         options={{
-          tabBarIcon: props => <TabBarIcon name="account" {...props} />,
+          tabBarIcon: (props) => <TabBarIcon name="account" {...props} />,
         }}
       />
     </Tab.Navigator>

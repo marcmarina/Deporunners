@@ -6,8 +6,8 @@ import * as Yup from 'yup';
 import Button from 'components/common/Button';
 import Text from 'components/common/Text';
 import TextInput from 'components/common/TextInput';
-import client from 'api/client';
-import logger from 'logging/logger';
+import { http } from 'api';
+import { logger } from 'logging';
 
 interface FormValues {
   oldPassword: string;
@@ -38,7 +38,7 @@ const PasswordChangeScreen: FC = () => {
   ) => {
     Keyboard.dismiss();
     try {
-      await client.patch('/member/changepassword', values);
+      await http.patch('/member/changepassword', values);
       resetForm();
       setSuccessVisible(true);
     } catch (ex) {
@@ -68,7 +68,7 @@ const PasswordChangeScreen: FC = () => {
               width="90%"
               style={{ opacity: 0.9 }}
               value={values.oldPassword}
-              onChangeText={text => setFieldValue('oldPassword', text)}
+              onChangeText={(text) => setFieldValue('oldPassword', text)}
               secureTextEntry
               keyboardType="default"
             />
@@ -78,7 +78,7 @@ const PasswordChangeScreen: FC = () => {
               width="90%"
               style={{ opacity: 0.9 }}
               value={values.newPassword}
-              onChangeText={text => setFieldValue('newPassword', text)}
+              onChangeText={(text) => setFieldValue('newPassword', text)}
               secureTextEntry
             />
             <TextInput
@@ -87,7 +87,7 @@ const PasswordChangeScreen: FC = () => {
               width="90%"
               style={{ opacity: 0.9 }}
               value={values.confirmNewPassword}
-              onChangeText={text => setFieldValue('confirmNewPassword', text)}
+              onChangeText={(text) => setFieldValue('confirmNewPassword', text)}
               secureTextEntry
             />
             <Button

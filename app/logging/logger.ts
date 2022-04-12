@@ -1,15 +1,17 @@
-import { env, isEnvDev } from 'config/env';
+import { env, isEnvDev } from 'config';
 import Constants from 'expo-constants';
 
 import * as Sentry from 'sentry-expo';
 
-const start = () =>
-  Sentry.init({
-    dsn: process.env.SENTRY_DSN,
-    enableInExpoDevelopment: true,
-    debug: isEnvDev() ? true : false,
-    environment: env().ENV_NAME,
-  });
+const start = isEnvDev()
+  ? () => undefined
+  : () =>
+      Sentry.init({
+        dsn: env().SENTRY_DSN,
+        enableInExpoDevelopment: true,
+        debug: isEnvDev() ? true : false,
+        environment: env().ENV_NAME,
+      });
 
 const log = (error: any) => {
   const releaseChannel = Constants.manifest.releaseChannel;

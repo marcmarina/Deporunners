@@ -2,7 +2,7 @@ import * as Updates from 'expo-updates';
 
 const releaseChannel = Updates.releaseChannel;
 
-export const env = () => {
+const envConfig = () => {
   switch (releaseChannel) {
     case 'production':
       return {
@@ -27,4 +27,13 @@ export const env = () => {
   }
 };
 
+const env = () => {
+  return {
+    SENTRY_DSN: process.env.SENTRY_DSN,
+    ...envConfig(),
+  };
+};
+
 export const isEnvDev = () => env().ENV_NAME === 'development';
+
+export default env;

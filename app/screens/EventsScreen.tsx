@@ -1,44 +1,43 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import { StyleSheet, View, SectionList } from 'react-native';
 
-import client from 'api/client';
+import { http } from 'api';
 import useAuth from 'auth/useAuth';
 import Icon from 'components/common/Icon';
 import Screen from 'components/common/Screen';
 import Text from 'components/common/Text';
 import EventListItem from 'components/EventListItem';
 import Event from 'interfaces/Event';
-import logger from 'logging/logger';
+import { logger } from 'logging';
+import { useQuery } from 'react-query';
 
 const EventsScreen: FC = () => {
-  const [events, setEvents] = useState<Event[]>();
-  const [loading, setLoading] = useState(false);
+  const {
+    data: events,
+    isLoading,
+    refetch,
+  } = useQuery(
+    'events',
+    async () => {
+      const res = await http.get('/event');
+
+      return res.data;
+    },
+    {
+      onError: (error) => {
+        logger.log(error);
+      },
+    }
+  );
 
   const { member } = useAuth();
 
-  useEffect(() => {
-    retrieveData();
-  }, []);
-
-  const retrieveData = async () => {
-    try {
-      setLoading(true);
-      const res = await client.get(`/event`);
-      if (res) {
-        setEvents(res.data);
-      }
-      setLoading(false);
-    } catch (ex) {
-      logger.log(ex);
-    }
-  };
-
-  if (!events || !member) return null;
+  if (isLoading || !member) return null;
 
   const createSectionedEventList = (events: Event[]) => {
     const attending: Event[] = [];
     const rest: Event[] = [];
-    events.forEach(event => {
+    events.forEach((event) => {
       if (event.members.includes(member._id.toString())) {
         attending.push(event);
       } else {
@@ -65,11 +64,11 @@ const EventsScreen: FC = () => {
     <Screen>
       <SectionList
         sections={sectionedEvents}
-        keyExtractor={item => item._id}
+        keyExtractor={(item) => item._id}
         contentContainerStyle={styles.list}
         showsVerticalScrollIndicator={false}
-        onRefresh={retrieveData}
-        refreshing={loading}
+        onRefresh={refetch}
+        refreshing={isLoading}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         renderItem={({ item }) => <EventListItem event={item} />}
         renderSectionHeader={({ section: { title, icon } }) => (

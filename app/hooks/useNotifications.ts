@@ -4,9 +4,9 @@ import * as Permissions from 'expo-permissions';
 import expoPushTokensApi from 'api/expoPushTokens';
 import { useEffect } from 'react';
 import navigation from 'navigation/rootNavigation';
-import logger from 'logging/logger';
+import { logger } from 'logging';
 
-const useNotifications = () => {
+export default function useNotifications() {
   const registerForPushNotifications = async () => {
     try {
       const permission = await Permissions.askAsync(Permissions.NOTIFICATIONS);
@@ -22,11 +22,9 @@ const useNotifications = () => {
 
   useEffect(() => {
     registerForPushNotifications();
-    Notifications.addListener(notification => {
+    Notifications.addListener((notification) => {
       if (notification.origin === 'selected')
         navigation.navigate(notification.data.route, notification.data.params);
     });
   }, []);
-};
-
-export default useNotifications;
+}
