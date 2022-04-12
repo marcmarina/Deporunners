@@ -13,7 +13,13 @@ import { logger } from 'logging';
 export default function useAuth() {
   const { member, setMember } = useContext(AuthContext);
 
-  const login = async (authToken: any, refreshToken: any) => {
+  const login = async ({
+    authToken,
+    refreshToken,
+  }: {
+    authToken: any;
+    refreshToken: any;
+  }) => {
     try {
       await storeToken(authToken);
       await storeRefreshToken(refreshToken);

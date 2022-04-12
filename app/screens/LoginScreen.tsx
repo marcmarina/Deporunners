@@ -30,11 +30,9 @@ const initialValues = {
 const LoginScreen: FunctionComponent = () => {
   const [errorText, setErrorText] = useState<string | null>(null);
 
-  const loginMutation = useMutation(async (values: any) => {
-    console.dir(values);
-
-    return http.post('/member/login', values);
-  });
+  const loginMutation = useMutation(async (values: any) =>
+    http.post('/member/login', values)
+  );
 
   const { login } = useAuth();
 
@@ -42,14 +40,14 @@ const LoginScreen: FunctionComponent = () => {
     Keyboard.dismiss();
     try {
       setErrorText(null);
-      const { data, headers } = await loginMutation.mutateAsync({
+      const { data: authToken, headers } = await loginMutation.mutateAsync({
         username,
         password,
       });
+
       const refreshToken = headers['x-refresh-token'];
-      login(data, refreshToken);
+      login({ authToken, refreshToken });
     } catch (ex) {
-      console.log(ex);
       if (ex?.response?.status === 401) {
         setErrorText('Les dades introduïdes no són valides');
       } else if (ex.code === 'ECONNABORTED') {
